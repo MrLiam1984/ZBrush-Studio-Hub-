@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZBrush & 3D Character Studio Hub Pro</title>
+  <title>3D Character & ZBrush Studio Hub — AI Powered</title>
   <!-- Ngăn chặn lỗi ngoại lệ từ tài nguyên bên ngoài làm gián đoạn trình xem -->
   <script>
     window.addEventListener('error', function(e) {
@@ -89,6 +89,7 @@
       transition: all 0.18s ease;
     }
     .btn:hover { background: #334155; border-color: #64748b; }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
     .btn-sketchfab {
       background: linear-gradient(135deg, #0284c7, #1caad9);
       color: #ffffff;
@@ -99,6 +100,11 @@
       background: linear-gradient(135deg, #ea580c, #f97316);
       color: #ffffff;
       border-color: #fb923c;
+    }
+    .btn-pinterest {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #ffffff;
+      border-color: #fb7185;
     }
     .badge {
       display: inline-flex;
@@ -131,7 +137,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 5px 11px;
+      padding: 5px 12px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 600;
@@ -142,7 +148,7 @@
       transition: all 0.15s ease;
     }
     .style-tag.selected, .style-tag:hover {
-      background: rgba(28, 170, 217, 0.2);
+      background: rgba(28, 170, 217, 0.22);
       color: #38bdf8;
       border-color: #38bdf8;
     }
@@ -163,7 +169,7 @@
     }
     .art-thumb {
       position: relative;
-      height: 210px;
+      height: 205px;
       background: #090d16;
       overflow: hidden;
       cursor: pointer;
@@ -175,6 +181,63 @@
       transition: transform 0.35s ease, filter 0.25s ease;
     }
     .art-card:hover .art-thumb img { transform: scale(1.05); }
+
+    /* PINTEREST MASONRY LAYOUT FOR PAGE 4 */
+    .pinterest-masonry {
+      column-count: 1;
+      column-gap: 16px;
+    }
+    @media (min-width: 640px) { .pinterest-masonry { column-count: 2; } }
+    @media (min-width: 1024px) { .pinterest-masonry { column-count: 3; } }
+    @media (min-width: 1280px) { .pinterest-masonry { column-count: 4; } }
+
+    .pin-card {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    .pin-card:hover {
+      transform: translateY(-4px);
+      border-color: #38bdf8;
+      box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.75);
+    }
+    .pin-img-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #0f172a;
+      cursor: zoom-in;
+    }
+    .pin-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+    .pin-card:hover .pin-img-wrap img {
+      transform: scale(1.04);
+    }
+    .pin-hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9,13,22,0.65) 0%, rgba(9,13,22,0.1) 45%, rgba(9,13,22,0.88) 100%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+    }
+    .pin-card:hover .pin-hover-overlay {
+      opacity: 1;
+    }
+
     .sketchfab-stage {
       position: relative;
       width: 100%;
@@ -220,10 +283,9 @@
     .modal-backdrop.open { display: flex; }
     .tab-section { display: none; }
     .tab-section.active { display: block; }
-    /* Bộ lọc giả lập kênh Clay / Wireframe cho ảnh thực tế */
     .filter-beauty { filter: none; }
-    .filter-clay { filter: grayscale(100%) contrast(130%) brightness(106%); }
-    .filter-wire { filter: grayscale(100%) contrast(280%) invert(92%) hue-rotate(175deg); }
+    .filter-clay { filter: grayscale(100%) contrast(132%) brightness(105%); }
+    .filter-wire { filter: grayscale(100%) contrast(260%) invert(92%) hue-rotate(175deg); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -237,21 +299,25 @@
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base md:text-lg font-extrabold text-white tracking-tight">ZBrush & 3D Character Studio Hub</h1>
-            <span class="badge badge-cyan">PRO WORKSPACE</span>
+            <h1 class="text-base md:text-lg font-extrabold text-white tracking-tight">3D Character & ZBrush Studio Hub</h1>
+            <span class="badge badge-cyan">AI STUDIO PRO</span>
           </div>
-          <p class="text-xs text-slate-400">Lộ trình học • Sketchfab 3D Viewer • Kho Video & Ref ArtStation/Pinterest (Cuộn Vô Tận) • AI Chấm Sản Phẩm & Portfolio</p>
+          <p class="text-xs text-slate-400">AI Quét Khóa Học Tự Động • Sketchfab 3D Viewer • Kho Video • Pinterest & ArtStation 3D Ref Wall • AI Chấm Sản Phẩm</p>
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2.5">
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Nút Gắn Google Gemini API Key Trực Tiếp -->
+        <button id="headerApiKeyBtn" class="btn btn-orange text-xs" onclick="openModal('apiKeyModal')">
+          <i class="fa-solid fa-key"></i> <span id="headerApiKeyStatus">Gắn Google API Key</span>
+        </button>
         <div class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
           <i class="fa-solid fa-fire text-orange-400"></i>
-          <span>Streak: <strong id="headerStreakText" class="text-white">3 ngày</strong></span>
+          <span>Streak: <strong id="headerStreakText" class="text-white">1 ngày</strong></span>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
           <i class="fa-solid fa-star text-amber-400"></i>
-          <span id="headerLevelText" class="font-bold text-sky-400">Lv.1 • 120 XP</span>
+          <span id="headerLevelText" class="font-bold text-sky-400">Lv.1 • 100 XP</span>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 flex items-center gap-2 text-xs">
           <i class="fa-solid fa-check-double text-emerald-400"></i>
@@ -266,7 +332,7 @@
     <!-- 6-PAGE NAVIGATION BAR -->
     <div class="max-w-7xl mx-auto mt-3 flex items-center gap-2 overflow-x-auto pb-1">
       <button id="nav-roadmap" class="nav-pill active" onclick="switchTab('roadmap')">
-        <i class="fa-solid fa-calendar-check"></i> 1. Lộ Trình & Speed Sculpt
+        <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> 1. AI Lên Lộ Trình & Quản Lý Học
       </button>
       <button id="nav-viewer3d" class="nav-pill" onclick="switchTab('viewer3d')">
         <i class="fa-solid fa-cube text-sky-400"></i> 2. Sketchfab 3D Viewer
@@ -275,10 +341,10 @@
         <i class="fa-brands fa-youtube text-rose-500"></i> 3. Kho Video & Bài Viết (Cuộn Vô Tận)
       </button>
       <button id="nav-refboard" class="nav-pill" onclick="switchTab('refboard')">
-        <i class="fa-brands fa-artstation text-sky-400"></i> 4. ArtStation & Pinterest Ref Wall
+        <i class="fa-brands fa-pinterest text-rose-500"></i> 4. Pinterest & ArtStation 3D Ref Wall
       </button>
       <button id="nav-critique" class="nav-pill" onclick="switchTab('critique')">
-        <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> 5. AI Chấm Sản Phẩm (3D/2D)
+        <i class="fa-solid fa-microscope text-purple-400"></i> 5. AI Chấm Sản Phẩm (3D/2D)
       </button>
       <button id="nav-portfolio" class="nav-pill" onclick="switchTab('portfolio')">
         <i class="fa-solid fa-briefcase text-emerald-400"></i> 6. Smart Portfolio 3D
@@ -290,61 +356,118 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
 
     <!-- =================================================================== -->
-    <!-- PAGE 1: LỘ TRÌNH HỌC TẬP, SPEED SCULPT TIMER & AI SYLLABUS IMPORTER -->
+    <!-- PAGE 1: AI QUÉT LINK KHÓA HỌC / VIDEO & LÊN LỘ TRÌNH (MẶC ĐỊNH TRỐNG)-->
     <!-- =================================================================== -->
     <section id="tab-roadmap" class="tab-section active space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Cột trái & giữa: AI Course Scanner + Danh sách Lộ trình -->
         <div class="lg:col-span-2 space-y-5">
-          <div class="studio-card p-5">
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+
+          <!-- AI COURSE / LINK SCANNER PANEL -->
+          <div class="studio-card p-5 border border-sky-500/30">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
               <div>
-                <span class="badge badge-cyan mb-1"><i class="fa-solid fa-graduation-cap"></i> GIÁO TRÌNH ĐANG THEO HỌC</span>
-                <h2 id="courseMainTitle" class="text-lg font-extrabold text-white">Khóa tự học 3D - Tự học ZBrush (GV: Cường CG - Udemy)</h2>
+                <span class="badge badge-cyan mb-1"><i class="fa-solid fa-robot"></i> AI SMART COURSE & VIDEO SCANNER (GOOGLE GEMINI)</span>
+                <h2 class="text-base md:text-lg font-extrabold text-white">Dán Link Khóa Học, Link Video Hoặc Chủ Đề Bất Kỳ Để AI Lên Lộ Trình</h2>
               </div>
-              <div class="flex flex-wrap gap-2">
-                <button class="btn text-xs" onclick="loadCuongCGDefaultCourse()">
-                  <i class="fa-solid fa-rotate-left text-sky-400"></i> Khôi phục 35 Bài Cường CG
+              <button class="btn text-xs" onclick="openModal('apiKeyModal')">
+                <i class="fa-solid fa-key text-amber-400"></i> Cài Đặt API Key
+              </button>
+            </div>
+
+            <div class="space-y-3 bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+              <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">1. Dán Link (Udemy, YouTube Playlist/Video, Wingfox, Coloso, ArtStation...) hoặc Nhập Chủ Đề Muốn Học:</label>
+                <input id="aiCourseLinkOrTopic" type="text" placeholder="VD: https://www.udemy.com/course/... hoặc https://www.youtube.com/watch?v=... hoặc 'Tự học dựng nhân vật nữ Stylized trong ZBrush từ con số 0'" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-sky-400 focus:outline-none" />
+              </div>
+
+              <div>
+                <label class="text-xs font-bold text-slate-300 block mb-1">2. Dán thêm đề cương / danh sách bài học hoặc mục tiêu cá nhân của bạn (Tùy chọn):</label>
+                <textarea id="aiCourseExtraContext" rows="3" placeholder="Nếu bạn có sẵn danh sách bài học hoặc yêu cầu riêng (VD: Tôi là người mới, mỗi ngày học 90 phút, muốn tập trung vào giải phẫu khuôn mặt, tóc và quần áo...), hãy ghi vào đây để AI thiết kế sát nhất." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-white focus:border-sky-400 focus:outline-none"></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Ngày bắt đầu học:</label>
+                  <input id="scheduleStartDate" type="date" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                </div>
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Nhịp độ học:</label>
+                  <select id="schedulePaceSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white">
+                    <option value="1">Mỗi ngày 1 bài (Tốc hành)</option>
+                    <option value="2" selected>2 ngày / 1 bài (Chuẩn khuyến nghị)</option>
+                    <option value="3">3 ngày / 1 bài (Thong thả)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Số bài học dự kiến:</label>
+                  <select id="aiTargetLessonCount" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white">
+                    <option value="12">12 Bài (Ngắn gọn 3 Chương)</option>
+                    <option value="20" selected>20 Bài (Tiêu chuẩn 4 Chương)</option>
+                    <option value="30">30 Bài (Chuyên sâu 5 Chương)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Gợi ý chủ đề nhanh nếu người học chưa có link -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                <span class="text-[11px] text-slate-400 mr-1">Điền nhanh mẫu thử:</span>
+                <button class="badge hover:border-sky-400 cursor-pointer" onclick="fillQuickCoursePrompt('Khóa học ZBrush cơ bản đến nâng cao cho người mới bắt đầu (Làm quen giao diện, DynaMesh, ZRemesher, Anatomy, Pose & Render)')">ZBrush Cho Người Mới</button>
+                <button class="badge hover:border-sky-400 cursor-pointer" onclick="fillQuickCoursePrompt('Chuyên đề Điêu khắc Đầu & Khuôn Mặt Nữ Anime Semi-Realistic + Tóc CurveTubes trong ZBrush')">Chuyên Đề Đầu Nữ & Tóc</button>
+                <button class="badge hover:border-sky-400 cursor-pointer" onclick="fillQuickCoursePrompt('Quy trình làm Nhân Vật Game 3D Toàn Diện: ZBrush High-Poly -> Maya Quad Draw Retopology -> Substance Painter -> Marmoset')">Full Pipeline Nhân Vật Game</button>
+              </div>
+
+              <div class="flex flex-wrap gap-2 pt-2">
+                <button id="aiScanCourseBtn" class="btn btn-sketchfab flex-1 py-2.5 text-xs" onclick="scanAndBuildRoadmapWithAI()">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> AI Quét Link / Nội Dung & Tạo Lộ Trình Học Ngay
                 </button>
-                <button class="btn btn-sketchfab text-xs" onclick="appendAnimeSemiBridgeChapter()">
-                  <i class="fa-solid fa-plus"></i> + Chương 5: Chuyên Đề Đầu Nữ & Retopo
+                <button class="btn text-xs" onclick="openModal('manualLessonModal')" title="Tự thêm chương hoặc bài học thủ công">
+                  <i class="fa-solid fa-plus"></i> Thêm Thủ Công
+                </button>
+                <button class="btn text-xs text-rose-400" onclick="clearCurrentRoadmap()" title="Xóa trắng lộ trình hiện tại để tạo mới">
+                  <i class="fa-solid fa-trash-can"></i> Xóa Trắng
                 </button>
               </div>
             </div>
+          </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 mb-4">
+          <!-- AI STUDY ADVISOR SUMMARY (Hiện ra khi AI phân tích xong khóa học) -->
+          <div id="aiAdvisorSummaryBox" class="studio-card p-5 hidden border border-amber-500/30 bg-amber-950/10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="badge badge-orange"><i class="fa-solid fa-lightbulb"></i> AI STUDY ADVISOR — CHIẾN LƯỢC HỌC TẬP ĐỀ XUẤT</span>
+              <span id="aiAdvisorModelBadge" class="text-[11px] text-slate-400">Gemini AI Grounded</span>
+            </div>
+            <p id="aiAdvisorOverviewText" class="text-xs text-slate-200 leading-relaxed mb-3"></p>
+            <div id="aiAdvisorTipsList" class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs"></div>
+          </div>
+
+          <!-- DANH SÁCH LỘ TRÌNH HỌC TẬP (TRỐNG MẶC ĐỊNH CHO ĐẾN KHI NGƯỜI DÙNG TẠO) -->
+          <div class="studio-card p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div>
-                <label class="text-xs text-slate-400 block mb-1">Ngày bắt đầu học:</label>
-                <input id="scheduleStartDate" type="date" value="2026-11-01" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" />
+                <span class="badge badge-emerald mb-1"><i class="fa-solid fa-list-check"></i> LỘ TRÌNH HỌC TẬP CÁ NHÂN</span>
+                <h3 id="courseMainTitle" class="text-base md:text-lg font-extrabold text-white">Chưa có lộ trình — Hãy dán Link hoặc Chủ đề ở trên để bắt đầu</h3>
               </div>
-              <div>
-                <label class="text-xs text-slate-400 block mb-1">Nhịp độ học (Cách ngày):</label>
-                <select id="schedulePaceSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white">
-                  <option value="1">Mỗi ngày 1 bài (Tốc hành)</option>
-                  <option value="2" selected>2 ngày / 1 bài (Chuẩn khuyến nghị)</option>
-                  <option value="3">3 ngày / 1 bài (Thong thả)</option>
-                </select>
-              </div>
-              <div class="flex items-end">
-                <button class="btn btn-sketchfab w-full text-xs py-2" onclick="applyScheduleSettings()">
-                  <i class="fa-solid fa-calendar-days"></i> Tự Động Dàn Lại Lịch
-                </button>
-              </div>
+              <button class="btn text-xs" onclick="applyScheduleSettings()">
+                <i class="fa-solid fa-calendar-days text-sky-400"></i> Cập Nhật Lại Ngày Học
+              </button>
             </div>
 
             <div class="mb-4">
               <div class="flex justify-between text-xs mb-1">
-                <span class="text-slate-400">Tiến độ hoàn thành bài tập:</span>
-                <strong id="roadmapProgressLabel" class="text-sky-400">0 / 35 bài (0%)</strong>
+                <span class="text-slate-400">Tiến độ hoàn thành:</span>
+                <strong id="roadmapProgressLabel" class="text-sky-400">0 / 0 bài (0%)</strong>
               </div>
               <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
                 <div id="roadmapProgressBar" class="h-full bg-gradient-to-r from-sky-500 to-emerald-400 transition-all duration-300" style="width: 0%"></div>
               </div>
             </div>
 
-            <div id="curriculumContainer" class="space-y-3 max-h-[620px] overflow-y-auto pr-1"></div>
+            <div id="curriculumContainer" class="space-y-3 max-h-[650px] overflow-y-auto pr-1"></div>
           </div>
         </div>
 
+        <!-- Cột phải: Speed Sculpt Timer + AI Quick Q&A Mentor -->
         <div class="space-y-5">
           <!-- Speed Sculpt Timer -->
           <div class="studio-card p-5">
@@ -354,7 +477,7 @@
             </div>
             <div class="text-center py-4 bg-slate-950 rounded-xl border border-slate-800 mb-3">
               <div id="timerClockText" class="text-4xl font-black text-white font-mono tracking-wider">45:00</div>
-              <p class="text-xs text-slate-400 mt-1">Tập trung dựng khối lớn — Cấm bật Subdivision cao!</p>
+              <p class="text-xs text-slate-400 mt-1">Tập trung dựng khối lớn — Kiểm tra Silhouette liên tục!</p>
             </div>
             <div class="grid grid-cols-3 gap-2 mb-3">
               <button class="btn text-xs" onclick="setSculptTimer(15)">15 Phút</button>
@@ -365,21 +488,23 @@
               <button id="timerToggleBtn" class="btn btn-sketchfab flex-1 py-2.5" onclick="toggleSculptTimer()">
                 <i class="fa-solid fa-play"></i> Bắt đầu
               </button>
-              <button class="btn py-2.5" onclick="finishSculptTimerSession()" title="Hoàn thành sớm & nhận XP">
+              <button class="btn py-2.5" onclick="finishSculptTimerSession()" title="Hoàn thành phiên & nhận XP">
                 <i class="fa-solid fa-flag-checkered text-emerald-400"></i>
               </button>
             </div>
           </div>
 
-          <!-- AI Syllabus Importer -->
+          <!-- Hỏi Đáp Nhanh Với AI Mentor ZBrush / 3D -->
           <div class="studio-card p-5">
-            <span class="badge badge-cyan mb-2"><i class="fa-solid fa-robot"></i> NHẬP GIÁO TRÌNH TÙY BIẾN</span>
-            <h3 class="text-sm font-extrabold text-white mb-2">Dán Đề Cương Bất Kỳ Để Tạo Lộ Trình</h3>
-            <input id="customCourseTitleInput" type="text" placeholder="Tên khóa học (VD: Luyện Giải Phẫu Đầu Nữ)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white mb-2.5" />
-            <textarea id="customSyllabusRawText" rows="5" placeholder="Mỗi dòng 1 bài học. Ví dụ:&#10;Bài 1: Dựng khối hộp sọ từ Sphere&#10;Bài 2: Tỷ lệ hốc mắt và gò má&#10;Bài 3: Điêu khắc mũi, môi, cằm..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white mb-3"></textarea>
-            <button id="aiSyllabusBtn" class="btn btn-orange w-full py-2.5 text-xs" onclick="generateCustomSyllabusWithAI()">
-              <i class="fa-solid fa-wand-magic-sparkles"></i> AI Tạo Lộ Trình Step-by-Step
+            <span class="badge badge-cyan mb-2"><i class="fa-solid fa-comments"></i> HỎI NHANH AI MENTOR 3D</span>
+            <h3 class="text-sm font-extrabold text-white mb-2">Gặp Lỗi ZBrush / Maya Hoặc Thắc Mắc Giải Phẫu?</h3>
+            <textarea id="quickMentorQuestion" rows="3" placeholder="VD: Tại sao khi bật DynaMesh hai ngón tay nhân vật bị dính chùm vào nhau? Cách khắc phục?" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white mb-2.5"></textarea>
+            <button id="askMentorBtn" class="btn btn-orange w-full py-2 text-xs mb-3" onclick="askQuickAIMentor()">
+              <i class="fa-solid fa-paper-plane"></i> Hỏi AI Mentor Ngay
             </button>
+            <div id="quickMentorAnswerBox" class="bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 leading-relaxed max-h-64 overflow-y-auto">
+              Hãy nhập câu hỏi bất kỳ về ZBrush, Blender, Maya, giải phẫu học hoặc cách cài đặt bảng vẽ Wacom để AI giải đáp tức thì.
+            </div>
           </div>
         </div>
       </div>
@@ -540,7 +665,7 @@
           <div class="flex flex-wrap items-center gap-2">
             <input id="videoSearchInput" type="text" placeholder="Tìm video, kênh (SpeedChar, FlippedNormals...)" oninput="resetAndRenderVideoHub()" class="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white w-64" />
             <button class="btn btn-orange text-xs" onclick="openModal('addVideoArticleModal')">
-              <i class="fa-solid fa-plus"></i> + Thêm Video / Bài Viết AI
+              <i class="fa-solid fa-plus"></i> + Thêm Video / AI Viết Bài Mới
             </button>
           </div>
         </div>
@@ -551,13 +676,12 @@
         <div id="knowledgeVideoSection" class="space-y-4 mb-8">
           <div class="flex items-center justify-between">
             <h3 class="text-sm font-extrabold uppercase tracking-wider text-sky-400">
-              <i class="fa-brands fa-youtube text-rose-500 mr-1"></i> Kho Video Điêu Khắc ZBrush, Giải Phẫu & Timelapse Thực Tế (Kéo Xuống Tự Động Tải Thêm)
+              <i class="fa-brands fa-youtube text-rose-500 mr-1"></i> Kho Video Điêu Khắc ZBrush, Giải Phẫu & Timelapse (Kéo Xuống Tự Động Tải Thêm)
             </h3>
             <span id="videoShowingStatus" class="text-xs text-slate-400"></span>
           </div>
           <div id="videoGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
 
-          <!-- Infinite Scroll Sentinel for Videos -->
           <div id="videoInfiniteSentinel" class="py-6 flex flex-col items-center justify-center gap-2 border border-dashed border-slate-800 rounded-xl bg-slate-950/50">
             <div class="text-xs text-sky-400 font-bold flex items-center gap-2">
               <i class="fa-solid fa-circle-notch fa-spin"></i> Kéo xuống để tự động nạp thêm Video hoặc bấm nút bên dưới
@@ -571,7 +695,7 @@
         <!-- Articles Section -->
         <div id="knowledgeArticleSection" class="space-y-3">
           <h3 class="text-sm font-extrabold uppercase tracking-wider text-amber-400">
-            <i class="fa-solid fa-book-open mr-1"></i> Cẩm Nang & Bài Viết Phân Tích Chuyên Sâu (Có Minh Họa Thực Tế)
+            <i class="fa-solid fa-book-open mr-1"></i> Cẩm Nang & Bài Viết Phân Tích Chuyên Sâu
           </h3>
           <div id="articleGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         </div>
@@ -579,43 +703,59 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- PAGE 4: ARTSTATION & PINTEREST 3D SCULPT SHOWCASE (CUỘN VÔ TẬN)     -->
+    <!-- PAGE 4: PINTEREST & ARTSTATION 3D CHARACTER REF WALL (MASONRY)      -->
     <!-- =================================================================== -->
     <section id="tab-refboard" class="tab-section space-y-6">
       <div class="studio-card p-5">
+        <!-- Pinterest-Style Search & Action Header -->
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <span class="badge badge-cyan"><i class="fa-brands fa-artstation"></i> ARTSTATION 3D FEED</span>
-              <span class="badge badge-orange"><i class="fa-brands fa-pinterest"></i> PINTEREST REF BOARD</span>
+              <span class="badge badge-orange"><i class="fa-brands fa-pinterest"></i> PINTEREST 3D PIN WALL</span>
+              <span class="badge badge-cyan"><i class="fa-brands fa-artstation"></i> ARTSTATION 3D SHOWCASE</span>
             </div>
-            <h2 class="text-lg font-extrabold text-white">Tường Sản Phẩm 3D Sculpt Thực Tế & Reference (Kéo Tới Đâu Hiện Tới Đó)</h2>
+            <h2 class="text-lg font-extrabold text-white">Khám Phá Ảnh Sản Phẩm 3D Nhân Vật, Tượng Bust, Giải Phẫu & Giáp Trụ</h2>
+            <p class="text-xs text-slate-400">Bấm vào bất kỳ thẻ Pin nào để xem ảnh lớn, truy cập thẳng tới trang nguồn sản phẩm (ArtStation / Pinterest) và khám phá các ảnh sản phẩm tương tự.</p>
           </div>
+
           <div class="flex flex-wrap items-center gap-2">
-            <input id="refSearchInput" type="text" placeholder="Tìm tên tác phẩm, Artist, Anime, Armor, Hair..." oninput="resetAndRenderRefBoard()" class="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white w-60" />
-            <button class="btn text-xs" onclick="openExternalSearch('artstation')" title="Tìm trực tiếp trên ArtStation">
-              <i class="fa-brands fa-artstation text-sky-400"></i> Tìm ArtStation
-            </button>
-            <button class="btn text-xs" onclick="openExternalSearch('pinterest')" title="Tìm trực tiếp trên Pinterest">
-              <i class="fa-brands fa-pinterest text-rose-500"></i> Tìm Pinterest
+            <button class="btn btn-orange text-xs" onclick="generateNew3DRefPinWithAI()" id="aiGenRefPinBtn">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> AI Tạo Ảnh Ref 3D Mới
             </button>
             <button class="btn btn-sketchfab text-xs" onclick="openModal('addRefModal')">
-              <i class="fa-solid fa-plus"></i> + Dán Link Ảnh ArtStation / Pinterest
+              <i class="fa-solid fa-plus"></i> + Ghim Ảnh Ref Mới (Pin URL)
             </button>
           </div>
         </div>
 
+        <!-- Thanh Tìm Kiếm Kiểu Pinterest + Nút Tìm Kiếm Trực Tiếp Ngoài Nguồn -->
+        <div class="flex flex-wrap items-center gap-2 bg-slate-950 p-3 rounded-2xl border border-slate-800 mb-4">
+          <i class="fa-solid fa-magnifying-glass text-slate-400 ml-2"></i>
+          <input id="refSearchInput" type="text" placeholder="Tìm kiếm Ref 3D (VD: Female Bust, Anime Stylized, Classical Anatomy, Dark Knight Armor, Hair Sculpt, Creature...)" oninput="resetAndRenderRefBoard()" class="flex-1 bg-transparent text-xs text-white focus:outline-none px-2 py-1" />
+          <button class="btn text-xs" onclick="createSearchPinFromQuery()" title="Tạo nhanh bộ Pin tìm kiếm theo từ khóa bạn vừa gõ">
+            <i class="fa-solid fa-thumbtack text-amber-400"></i> Ghim Từ Khóa Này Lên Tường
+          </button>
+          <button class="btn text-xs" onclick="openExternalSearch('pinterest')" title="Mở tìm kiếm trực tiếp trên Pinterest">
+            <i class="fa-brands fa-pinterest text-rose-500"></i> Mở Pinterest
+          </button>
+          <button class="btn text-xs" onclick="openExternalSearch('artstation')" title="Mở tìm kiếm trực tiếp trên ArtStation">
+            <i class="fa-brands fa-artstation text-sky-400"></i> Mở ArtStation
+          </button>
+        </div>
+
+        <!-- Category Chips -->
         <div id="refTagFilterBar" class="flex flex-wrap gap-2 mb-5"></div>
 
-        <div id="refBoardGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        <!-- PINTEREST MASONRY WATERFALL GRID -->
+        <div id="refBoardGridContainer" class="pinterest-masonry"></div>
 
-        <!-- Infinite Scroll Sentinel for ArtStation/Pinterest Ref Wall -->
+        <!-- Infinite Scroll Sentinel for Pinterest/ArtStation Ref Wall -->
         <div id="refInfiniteSentinel" class="mt-6 py-6 flex flex-col items-center justify-center gap-2 border border-dashed border-slate-800 rounded-xl bg-slate-950/50">
           <div class="text-xs text-amber-400 font-bold flex items-center gap-2">
-            <i class="fa-solid fa-compass fa-spin"></i> Đang tự động nạp thêm tác phẩm 3D Sculpt từ nguồn ArtStation & Pinterest khi bạn cuộn...
+            <i class="fa-solid fa-compass fa-spin"></i> Kéo xuống để tự động tải thêm các Pin Sản Phẩm 3D Nhân Vật mới...
           </div>
-          <button class="btn btn-orange text-xs" onclick="loadMoreRefsBatch()">
-            <i class="fa-solid fa-angles-down"></i> Tải Thêm 6 Tác Phẩm Reference Mới
+          <button class="btn btn-pinterest text-xs" onclick="loadMoreRefsBatch()">
+            <i class="fa-solid fa-angles-down"></i> Tải Thêm 8 Ảnh Sản Phẩm 3D Mới
           </button>
         </div>
       </div>
@@ -629,8 +769,8 @@
         <div class="studio-card p-5 space-y-4">
           <div class="flex items-center justify-between">
             <div>
-              <span class="badge badge-cyan mb-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI ART DIRECTOR CRITIQUE</span>
-              <h2 class="text-base font-extrabold text-white">Gửi File 3D Hoặc Ảnh Chụp Để Chấm & Sửa Khối</h2>
+              <span class="badge badge-cyan mb-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI ART DIRECTOR CRITIQUE (GEMINI VISION)</span>
+              <h2 class="text-base font-extrabold text-white">Gửi File 3D Hoặc Ảnh Chụp Để AI Chấm & Sửa Khối</h2>
             </div>
             <span id="critiqueScoreTag" class="badge badge-emerald">Sẵn sàng chấm</span>
           </div>
@@ -649,7 +789,7 @@
           <div id="critiqueMeshStatsBar" class="hidden bg-sky-950/60 border border-sky-500/40 rounded-lg px-3 py-2 text-xs text-sky-300 font-semibold"></div>
 
           <div class="relative rounded-xl overflow-hidden bg-slate-950 border border-slate-800 h-72 flex items-center justify-center">
-            <img id="critiquePreviewImage" src="https://i.ytimg.com/vi/I14uAJ063DY/hqdefault.jpg" alt="Critique Preview" class="max-h-full max-w-full object-contain" />
+            <img id="critiquePreviewImage" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80" alt="Critique Preview" class="max-h-full max-w-full object-contain" />
           </div>
 
           <div>
@@ -663,12 +803,12 @@
 
           <div>
             <label class="text-xs font-bold text-slate-300 block mb-1">Ghi chú phần bạn đang phân vân (Tùy chọn):</label>
-            <textarea id="critiqueUserNotes" rows="2" placeholder="VD: Kiểm tra giúp mình phần hốc mắt và xương hàm dưới góc nghiêng 45 độ..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white"></textarea>
+            <textarea id="critiqueUserNotes" rows="2" placeholder="VD: Kiểm tra giúp mình phần hốc mắt, gò má và xương hàm dưới góc nghiêng 45 độ..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white"></textarea>
           </div>
 
           <div class="flex flex-wrap gap-2">
-            <button class="btn btn-orange flex-1 py-2.5 text-xs" onclick="runAICritiqueAnalysis()">
-              <i class="fa-solid fa-magnifying-glass-chart"></i> Phân Tích & Lập Phác Đồ Sửa Khối
+            <button id="runCritiqueBtn" class="btn btn-orange flex-1 py-2.5 text-xs" onclick="runAICritiqueAnalysis()">
+              <i class="fa-solid fa-magnifying-glass-chart"></i> AI Phân Tích & Lập Phác Đồ Sửa Khối
             </button>
             <button class="btn text-xs" onclick="promoteCritiqueWorkToPortfolio()">
               <i class="fa-solid fa-briefcase text-emerald-400"></i> Đưa Vào Portfolio 3D
@@ -683,7 +823,7 @@
             <div id="critiqueFeedbackBody" class="space-y-3 text-xs text-slate-300">
               <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-center text-slate-400">
                 <i class="fa-solid fa-wand-magic-sparkles text-2xl text-sky-400 mb-2"></i>
-                <p>Hãy tải một <strong>File 3D (.OBJ/.FBX/.GLB/.STL)</strong> hoặc dán ảnh <strong>Ctrl + V</strong>, chọn <strong>#StyleTags</strong> bên trái và bấm nút <strong>Phân Tích & Lập Phác Đồ Sửa Khối</strong>.</p>
+                <p>Hãy tải một <strong>File 3D (.OBJ/.FBX/.GLB/.STL)</strong> hoặc dán ảnh <strong>Ctrl + V</strong>, chọn <strong>#StyleTags</strong> bên trái và bấm nút <strong>AI Phân Tích & Lập Phác Đồ Sửa Khối</strong>.</p>
               </div>
             </div>
           </div>
@@ -721,7 +861,62 @@
   <!-- MODALS                                                                -->
   <!-- ===================================================================== -->
 
-  <!-- Video Player Modal -->
+  <!-- GOOGLE GEMINI API KEY MODAL -->
+  <div id="apiKeyModal" class="modal-backdrop">
+    <div class="studio-card w-full max-w-lg p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="badge badge-orange"><i class="fa-solid fa-key"></i> CẤU HÌNH GOOGLE GEMINI AI</span>
+          <h3 class="text-base font-extrabold text-white mt-1">Gắn API Key Để Kích Hoạt Toàn Bộ Tính Năng AI</h3>
+        </div>
+        <button class="btn text-xs" onclick="closeModal('apiKeyModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Khi bạn đưa trang web này lên <strong>GitHub Pages</strong>, bất kỳ ai cũng có thể dán mã <strong>Google Gemini API Key</strong> cá nhân (lấy miễn phí tại <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline font-bold">Google AI Studio</a>) vào ô dưới đây để sử dụng: <strong>AI Quét Link Khóa Học, AI Mentor, AI Chấm Bài Vision & AI Tạo Ảnh Ref 3D</strong>.
+      </p>
+      <div class="space-y-3 bg-slate-950 p-4 rounded-xl border border-slate-800">
+        <div>
+          <label class="text-xs font-bold text-slate-300 block mb-1">Google Gemini API Key (`AIza...`):</label>
+          <input id="userGeminiApiKeyInput" type="password" placeholder="Dán mã API Key của bạn vào đây (Để trống nếu dùng mặc định trong Canvas)..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+        </div>
+        <div>
+          <label class="text-xs font-bold text-slate-300 block mb-1">Model Gemini ưu tiên:</label>
+          <select id="userGeminiModelSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
+            <option value="gemini-3-flash-preview" selected>gemini-3-flash-preview (Tốc độ cao + Hỗ trợ Google Search & Vision)</option>
+            <option value="gemini-2.5-flash">gemini-2.5-flash (Ổn định, tương thích rộng)</option>
+          </select>
+        </div>
+        <div id="apiKeyTestResult" class="text-xs text-slate-400"></div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button class="btn btn-sketchfab flex-1 py-2 text-xs" onclick="saveUserGeminiApiKey()">
+          <i class="fa-solid fa-floppy-disk"></i> Lưu API Key
+        </button>
+        <button id="testApiKeyBtn" class="btn btn-orange py-2 text-xs" onclick="testUserGeminiApiKey()">
+          <i class="fa-solid fa-bolt"></i> Kiểm Tra Kết Nối AI
+        </button>
+        <button class="btn text-xs text-rose-400 py-2" onclick="clearUserGeminiApiKey()">
+          Xóa Key
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Add Lesson Modal -->
+  <div id="manualLessonModal" class="modal-backdrop">
+    <div class="studio-card w-full max-w-md p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-extrabold text-white">Thêm Chương & Bài Học Thủ Công</h3>
+        <button class="btn text-xs" onclick="closeModal('manualLessonModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <input id="manualChapTitle" type="text" placeholder="Tên Chương (VD: Chương 1: Làm quen ZBrush & DynaMesh)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
+      <input id="manualLessonTitle" type="text" placeholder="Tên Bài học (VD: Bài 1: Dựng hộp sọ từ khối Sphere)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
+      <input id="manualLessonTools" type="text" placeholder="Công cụ sử dụng (Cách nhau dấu phẩy: Move, ClayBuildup, DynaMesh)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
+      <button class="btn btn-sketchfab w-full py-2 text-xs" onclick="addManualLessonToRoadmap()">+ Thêm Vào Lộ Trình</button>
+    </div>
+  </div>
+
+  <!-- Video Player Modal (Page 3 only) -->
   <div id="videoPlayerModal" class="modal-backdrop">
     <div class="studio-card w-full max-w-3xl p-5 space-y-4">
       <div class="flex items-center justify-between">
@@ -762,7 +957,7 @@
   <div id="addVideoArticleModal" class="modal-backdrop">
     <div class="studio-card w-full max-w-lg p-5 space-y-3">
       <div class="flex items-center justify-between">
-        <h3 class="text-sm font-extrabold text-white">Thêm Video YouTube Hoặc Tạo Bài Viết Bằng AI</h3>
+        <h3 class="text-sm font-extrabold text-white">Thêm Video YouTube Hoặc Nhờ AI Viết Bài Phân Tích</h3>
         <button class="btn text-xs" onclick="closeModal('addVideoArticleModal')"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <input id="newVidTitle" type="text" placeholder="Tiêu đề Video hoặc Chủ đề bài viết muốn AI biên soạn..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
@@ -778,71 +973,101 @@
       <textarea id="newVidNotes" rows="3" placeholder="Ghi chú 2-3 ý chính (Mỗi dòng 1 ý)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white"></textarea>
       <div class="flex gap-2">
         <button class="btn btn-sketchfab flex-1 text-xs py-2" onclick="saveNewVideoItem()">+ Lưu Video</button>
-        <button class="btn btn-orange flex-1 text-xs py-2" onclick="generateNewArticleWithAI()">AI Viết Bài Chuyên Sâu</button>
+        <button id="aiWriteArtBtn" class="btn btn-orange flex-1 text-xs py-2" onclick="generateNewArticleWithAI()">AI Viết Bài Chuyên Sâu</button>
       </div>
     </div>
   </div>
 
-  <!-- Ref Lightbox Modal (Real Artwork + Clay Filter + Wire Filter + Video Timelapse + External Source Links) -->
+  <!-- PINTEREST & ARTSTATION PIN INSPECTOR + SIMILAR PINS MODAL (Page 4) -->
   <div id="refLightboxModal" class="modal-backdrop">
-    <div class="studio-card w-full max-w-4xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <span id="refLbSoftware" class="badge badge-cyan">ZBrush • Marmoset</span>
-          <h3 id="refLbTitle" class="text-base font-extrabold text-white mt-1">Artwork Title</h3>
-          <p id="refLbArtist" class="text-xs text-slate-400"></p>
+    <div class="studio-card w-full max-w-5xl p-5 space-y-5 max-h-[92vh] overflow-y-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+        <!-- Left 3 cols: Pin Artwork Image + Clay/Silhouette/Flip Inspection -->
+        <div class="lg:col-span-3 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-1.5">
+            <div class="flex flex-wrap gap-1.5">
+              <button id="refBtnBeauty" class="btn btn-sketchfab text-xs" onclick="switchRefModalChannel('beauty')">1. Ảnh Gốc (Render)</button>
+              <button id="refBtnClay" class="btn text-xs" onclick="switchRefModalChannel('clay')">2. Soi Sắc Độ Đất Sét (Clay)</button>
+              <button id="refBtnWire" class="btn text-xs" onclick="switchRefModalChannel('wire')">3. Soi Đường Biên (Edge)</button>
+            </div>
+            <div class="flex gap-1.5">
+              <button class="btn text-xs" onclick="toggleRefModalFlip()"><i class="fa-solid fa-arrows-left-right"></i> Lật Ngang</button>
+              <button class="btn text-xs" onclick="toggleRefModalZoom()"><i class="fa-solid fa-magnifying-glass-plus"></i> Phóng To</button>
+            </div>
+          </div>
+
+          <div class="w-full h-[430px] bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden flex items-center justify-center relative">
+            <img id="refLbImage" src="" alt="3D Character Reference Pin" class="max-h-full max-w-full object-contain transition-all duration-200" />
+          </div>
         </div>
-        <div class="flex flex-wrap items-center gap-1.5">
-          <button id="refBtnBeauty" class="btn btn-sketchfab text-xs" onclick="switchRefModalChannel('beauty')">1. Final Render</button>
-          <button id="refBtnClay" class="btn text-xs" onclick="switchRefModalChannel('clay')">2. Grey Clay Check</button>
-          <button id="refBtnWire" class="btn text-xs" onclick="switchRefModalChannel('wire')">3. Edge / Silhouette</button>
-          <button id="refBtnVideo" class="btn text-xs" onclick="switchRefModalChannel('video')"><i class="fa-brands fa-youtube text-rose-500"></i> 4. Xem Timelapse</button>
-          <button class="btn text-xs" onclick="toggleRefModalFlip()"><i class="fa-solid fa-arrows-left-right"></i> Lật Ngang</button>
-          <button class="btn text-xs" onclick="toggleRefModalZoom()"><i class="fa-solid fa-magnifying-glass-plus"></i> Zoom</button>
-          <button class="btn text-xs" onclick="closeRefLightboxModal()"><i class="fa-solid fa-xmark"></i></button>
+
+        <!-- Right 2 cols: Pin Source Info, Direct Links & Breakdown -->
+        <div class="lg:col-span-2 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span id="refLbSoftware" class="badge badge-cyan">ZBrush • Character 3D</span>
+              <button class="btn text-xs" onclick="closeRefLightboxModal()"><i class="fa-solid fa-xmark"></i> Đóng</button>
+            </div>
+
+            <h3 id="refLbTitle" class="text-lg font-extrabold text-white leading-snug">Artwork Title</h3>
+            <p id="refLbArtist" class="text-xs text-sky-400 font-semibold"></p>
+
+            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-xs font-bold text-amber-400"><i class="fa-solid fa-eye"></i> Điểm Ăn Tiền Cần Quan Sát Khi Lấy Ref:</div>
+              <p id="refLbBreakdown" class="text-xs text-slate-300 leading-relaxed"></p>
+            </div>
+
+            <div id="refLbTagsBox" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <!-- Direct Action Buttons to Original Source & Similar Search -->
+          <div class="space-y-2 pt-2 border-t border-slate-800">
+            <div class="text-xs font-bold text-slate-300">Mở nguồn sản phẩm hoặc tìm ảnh tương tự:</div>
+            <a id="refLbArtStationLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sketchfab w-full py-2.5 text-xs">
+              <i class="fa-brands fa-artstation"></i> Xem Sản Phẩm Trên ArtStation
+            </a>
+            <a id="refLbPinterestLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-pinterest w-full py-2.5 text-xs">
+              <i class="fa-brands fa-pinterest"></i> Xem & Tìm Ảnh Tương Tự Trên Pinterest
+            </a>
+          </div>
         </div>
       </div>
 
-      <div id="refLbImageStage" class="w-full h-[420px] bg-slate-950 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center">
-        <img id="refLbImage" src="" alt="Ref Breakdown" class="max-h-full max-w-full object-contain transition-all duration-200" />
-      </div>
-      <div id="refLbVideoStage" class="hidden w-full aspect-video bg-black rounded-xl border border-slate-800 overflow-hidden"></div>
-
-      <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-        <p id="refLbBreakdown" class="text-xs text-slate-300 flex-1"></p>
-        <div class="flex flex-wrap items-center gap-2">
-          <a id="refLbArtStationLink" href="#" target="_blank" rel="noopener noreferrer" class="btn text-xs">
-            <i class="fa-brands fa-artstation text-sky-400"></i> Nguồn ArtStation
-          </a>
-          <a id="refLbPinterestLink" href="#" target="_blank" rel="noopener noreferrer" class="btn text-xs">
-            <i class="fa-brands fa-pinterest text-rose-500"></i> Nguồn Pinterest
-          </a>
+      <!-- RELATED / SIMILAR 3D CHARACTER PINS SECTION (Giống Pinterest bên dưới Pin đang mở) -->
+      <div class="pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="text-sm font-extrabold text-white">
+            <i class="fa-solid fa-layer-group text-rose-500 mr-1"></i> Các Sản Phẩm 3D & Ảnh Reference Tương Tự Cùng Chủ Đề
+          </h4>
+          <span class="text-xs text-slate-400">Bấm vào ảnh bất kỳ để chuyển nhanh</span>
         </div>
+        <div id="refSimilarPinsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
       </div>
     </div>
   </div>
 
-  <!-- Add Ref Modal -->
+  <!-- Add Ref Pin Modal -->
   <div id="addRefModal" class="modal-backdrop">
     <div class="studio-card w-full max-w-lg p-5 space-y-3">
       <div class="flex items-center justify-between">
-        <h3 class="text-sm font-extrabold text-white">Lưu Ảnh Sản Phẩm Từ ArtStation / Pinterest Vào Tường</h3>
+        <h3 class="text-sm font-extrabold text-white">Ghim Ảnh Sản Phẩm 3D Từ ArtStation / Pinterest Vào Tường</h3>
         <button class="btn text-xs" onclick="closeModal('addRefModal')"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <input id="newRefTitle" type="text" placeholder="Tên tác phẩm Reference (VD: Valkyrie Armor Sculpt)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
+      <input id="newRefTitle" type="text" placeholder="Tên tác phẩm 3D Reference (VD: Valkyrie Armor Character Sculpt)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
       <input id="newRefArtist" type="text" placeholder="Tên Artist / Studio..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
       <select id="newRefCategory" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white">
         <option value="Anime & Stylized">Anime & Stylized</option>
-        <option value="Realism / AAA">Realism / AAA</option>
-        <option value="Anatomy / Bust">Anatomy / Bust</option>
-        <option value="Hard-Surface / Mecha">Hard-Surface / Mecha</option>
-        <option value="Hair & Cloth">Hair & Cloth</option>
+        <option value="Female Bust & Portrait">Female Bust & Portrait</option>
+        <option value="Anatomy & Ecorche">Anatomy & Ecorche</option>
+        <option value="Armor & Hard-Surface">Armor & Hard-Surface</option>
+        <option value="Hair & Drapery">Hair & Drapery</option>
+        <option value="Creature & Fantasy">Creature & Fantasy</option>
       </select>
-      <input id="newRefUrlInput" type="text" placeholder="Dán trực tiếp Link Ảnh (ArtStation CDN / Pinterest / Imgur)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
-      <input id="newRefSourceLink" type="text" placeholder="Link bài gốc ArtStation hoặc Pinterest (Tùy chọn)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
+      <input id="newRefUrlInput" type="text" placeholder="Dán trực tiếp Link Ảnh (.jpg/.png/.webp từ ArtStation / Pinterest)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
+      <input id="newRefSourceLink" type="text" placeholder="Link bài gốc sản phẩm trên ArtStation hoặc Pinterest..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white" />
       <input type="file" accept="image/*" onchange="handleNewRefFileUpload(event)" class="text-xs text-slate-400" />
-      <textarea id="newRefBreakdown" rows="3" placeholder="Ghi chú điểm ăn tiền cần học hỏi (Silhouette, ánh sáng, nếp vải...)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white"></textarea>
-      <button class="btn btn-sketchfab w-full py-2 text-xs" onclick="saveNewRefBoardItem()">Lưu Vào Ref Wall</button>
+      <textarea id="newRefBreakdown" rows="3" placeholder="Ghi chú điểm ăn tiền cần học hỏi (Silhouette, tỷ lệ mặt, ánh sáng, chất liệu...)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white"></textarea>
+      <button class="btn btn-sketchfab w-full py-2 text-xs" onclick="saveNewRefBoardItem()">+ Ghim Lên Tường Ref</button>
     </div>
   </div>
 
@@ -919,7 +1144,7 @@
         <h3 class="text-sm font-extrabold text-white">Sao Lưu & Khôi Phục Dữ Liệu (.JSON)</h3>
         <button class="btn text-xs" onclick="closeModal('backupModal')"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <p class="text-xs text-slate-400">Mọi tiến độ bài học, thư viện Video, Ref Wall và Portfolio được lưu tự động trên trình duyệt. Bạn có thể xuất ra file `.json` để lưu trữ an toàn.</p>
+      <p class="text-xs text-slate-400">Mọi tiến độ lộ trình học, kho Video, bảng Pinterest Ref Wall và Portfolio được lưu tự động trên trình duyệt. Bạn có thể xuất ra file `.json` để lưu trữ an toàn.</p>
       <div class="flex flex-col gap-2">
         <button class="btn btn-sketchfab w-full py-2 text-xs" onclick="exportBackupJSON()">
           <i class="fa-solid fa-download"></i> Tải Xuống File Backup (.JSON)
@@ -929,7 +1154,7 @@
           <input type="file" accept=".json" class="hidden" onchange="importBackupJSON(event)" />
         </label>
         <button class="btn text-xs text-rose-400 w-full py-2" onclick="resetAllStudioData()">
-          <i class="fa-solid fa-rotate-left"></i> Đặt Lại Dữ Liệu Mặc Định Mới Nhất
+          <i class="fa-solid fa-rotate-left"></i> Đặt Lại Toàn Bộ Dữ Liệu Về Mặc Định
         </button>
       </div>
     </div>
@@ -945,8 +1170,11 @@
   <!-- APPLICATION JAVASCRIPT                                                -->
   <!-- ===================================================================== -->
   <script>
-    // Nâng cấp khóa lưu trữ lên v8 để xóa sạch các hình vẽ giả lập cũ trong bộ nhớ trình duyệt
-    const STORAGE_KEY = 'zbrush_studio_hub_pro_v8_real_art';
+    // Nâng cấp khóa lưu trữ lên v9: Trang 1 trống mặc định, tích hợp Google Gemini API Key & Pinterest 3D Masonry Wall
+    const STORAGE_KEY = 'zbrush_studio_hub_pro_v9_ai_pinterest';
+    const API_KEY_STORAGE = 'zbrush_studio_gemini_api_key_v9';
+    const API_MODEL_STORAGE = 'zbrush_studio_gemini_model_v9';
+
     let studioState = {};
     window.__portfolioCustomMeshes = {};
 
@@ -957,7 +1185,7 @@
       txt.textContent = msg;
       box.classList.remove('hidden');
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => box.classList.add('hidden'), 3200);
+      window.__toastTimer = setTimeout(() => box.classList.add('hidden'), 3400);
     }
 
     function openModal(id) {
@@ -987,85 +1215,357 @@
     }
 
     // -------------------------------------------------------------------------
-    // KHO DỮ LIỆU GỐC: 35 BÀI HỌC CƯỜNG CG + HƠN 24 VIDEO & 24 REF THỰC TẾ
+    // HỆ THỐNG QUẢN LÝ GOOGLE GEMINI API KEY & GỌI LLM THỰC TẾ
     // -------------------------------------------------------------------------
-    function buildDefaultCuongCGSyllabus(startStr = '2026-11-01', pace = 2) {
-      const chaps = [
-        {
-          id: 'chap_1',
-          title: 'Chương 1: Làm Quen ZBrush, Giao Diện & Dựng Khối Cơ Bản (9 Bài)',
-          lessons: [
-            { id: 'c1_l1', title: 'Bài 1: Tổng quan giao diện ZBrush & điều hướng vùng nhìn (Navigation)', tools: ['Right-Click Orbit', 'Alt + Right-Click Pan', 'Ctrl + Right-Click Zoom'] },
-            { id: 'c1_l2', title: 'Bài 2: Khởi tạo khối 3D đầu tiên, Edit Mode (T) & Make PolyMesh3D', tools: ['Make PolyMesh3D', 'Edit Mode (T)', 'Shift + F (Polyframe)'] },
-            { id: 'c1_l3', title: 'Bài 3: Bộ 6 cọ điêu khắc cốt lõi (Standard, Move, ClayBuildup, DamStandard, Smooth, TrimDynamic)', tools: ['B-S-T', 'B-M-V', 'B-C-B', 'B-D-S', 'B-T-D'] },
-            { id: 'c1_l4', title: 'Bài 4: Đối xứng Symmetry (X) & quản lý trục Local Symmetry (L.Sym)', tools: ['Activate Symmetry (X)', 'Mirror And Weld', 'L.Sym'] },
-            { id: 'c1_l5', title: 'Bài 5: Cơ chế DynaMesh — Tự động hàn lưới để dựng Primary Forms', tools: ['DynaMesh Resolution', 'Ctrl + Drag ngoài vùng trống'] },
-            { id: 'c1_l6', title: 'Bài 6: Subdivision Levels (Ctrl+D / Shift+D) & quy trình từ thấp lên cao', tools: ['Divide (Ctrl+D)', 'Lower Res (Shift+D)', 'Freeze Subdivision'] },
-            { id: 'c1_l7', title: 'Bài 7: Quản lý Subtool (Append, Insert, Duplicate, Merge, Split)', tools: ['Subtool Master', 'Split Hidden', 'MergeDown'] },
-            { id: 'c1_l8', title: 'Bài 8: Hệ thống Masking (Ctrl) & biến hình bằng Gizmo 3D (W/E/R)', tools: ['Ctrl + Paint Mask', 'Ctrl + Click Invert', 'Gizmo 3D'] },
-            { id: 'c1_l9', title: 'Bài 9: Thực hành tổng hợp Chương 1 — Dựng khối Base Mesh đầu tiên', tools: ['DynaMesh', 'Move', 'ClayBuildup', 'Silhouette Check'] }
-          ]
-        },
-        {
-          id: 'chap_2',
-          title: 'Chương 2: Công Cụ Cắt Gọt, Polygroup & Dựng Phụ Kiện Trang Bị (9 Bài)',
-          lessons: [
-            { id: 'c2_l10', title: 'Bài 10: Vùng chọn Selection (Ctrl+Shift) & Ẩn/Hiện từng phần lưới', tools: ['SelectRect', 'SelectLasso', 'Invert Visibility'] },
-            { id: 'c2_l11', title: 'Bài 11: Quản lý Polygroup (Ctrl+W) để tách mảng màu kỹ thuật', tools: ['Group Masked', 'Auto Groups', 'Group By Normals'] },
-            { id: 'c2_l12', title: 'Bài 12: Cắt khối sắc bén với KnifeCurve & TrimCurve', tools: ['KnifeCurve', 'TrimCurve', 'ClipCurve'] },
-            { id: 'c2_l13', title: 'Bài 13: Thiết lập ảnh tham chiếu bằng ImagePlane & chế độ SeeThrough', tools: ['Texture > ImagePlane', 'SeeThrough Slider', 'Camera 85mm'] },
-            { id: 'c2_l14', title: 'Bài 14: Tạo độ dày quần áo và giáp trụ bằng Extract & Panel Loops', tools: ['Subtool > Extract', 'Panel Loops', 'Polish By Features'] },
-            { id: 'c2_l15', title: 'Bài 15: ZRemesher — Đi lại lưới tứ giác (Quads) sạch đẹp tự động', tools: ['ZRemesher', 'Keep Groups', 'ZRemesherGuides'] },
-            { id: 'c2_l16', title: 'Bài 16: Cọ ZModeler (B-Z-M) — Dựng khối Hard-Surface cơ bản ngay trong ZBrush', tools: ['QMesh', 'Bevel', 'Insert EdgeLoop', 'Crease'] },
-            { id: 'c2_l17', title: 'Bài 17: Live Boolean — Đục lỗ và ghép khối cơ khí không phá hủy', tools: ['Live Boolean', 'Make Boolean Mesh'] },
-            { id: 'c2_l18', title: 'Bài 18: Thực hành dựng bộ giáp vai & vũ khí sắc cạnh', tools: ['Extract', 'ZRemesher', 'ZModeler', 'ClayPolish'] }
-          ]
-        },
-        {
-          id: 'chap_3',
-          title: 'Chương 3: Điêu Khắc Giải Phẫu Nhân Vật, Khuôn Mặt & Tóc (9 Bài)',
-          lessons: [
-            { id: 'c3_l19', title: 'Bài 19: Tỷ lệ vàng cơ thể người (7.5 – 8 đầu) & dựng khung Mannequin/ZSphere', tools: ['ZSphere', 'Adaptive Skin', 'Move Elastic'] },
-            { id: 'c3_l20', title: 'Bài 20: Giải phẫu hộp sọ, hốc mắt, xương gò má và hàm dưới (3 góc nhìn)', tools: ['Camera 85mm', 'ClayBuildup', 'TrimDynamic'] },
-            { id: 'c3_l21', title: 'Bài 21: Điêu khắc ngũ quan: Mắt, Mũi, Môi và Tai có chiều sâu', tools: ['DamStandard', 'MoveTopological', 'Pinch'] },
-            { id: 'c3_l22', title: 'Bài 22: Giải phẫu thân trên (Torso): Cơ ngực, cơ bụng, xương đòn & bả vai', tools: ['ClayBuildup', 'Smooth Stronger', 'Standard'] },
-            { id: 'c3_l23', title: 'Bài 23: Giải phẫu cánh tay, bàn tay và các đốt ngón tay tự nhiên', tools: ['MoveTopological', 'Mask Lasso', 'Gizmo Bend'] },
-            { id: 'c3_l24', title: 'Bài 24: Giải phẫu chân, đầu gối và dáng đứng cân bằng trọng tâm', tools: ['Move', 'TrimDynamic', 'Transpose Line'] },
-            { id: 'c3_l25', title: 'Bài 25: Điêu khắc Tóc bằng CurveTubes & IMM Hair Brushes (Big–Medium–Small)', tools: ['CurveTubes', 'Stroke > Curve Mode', 'MoveTopological'] },
-            { id: 'c3_l26', title: 'Bài 26: Điêu khắc nếp gấp quần áo (Cloth Folds) & Dynamics Simulation', tools: ['Standard', 'DamStandard', 'Dynamics > Gravity'] },
-            { id: 'c3_l27', title: 'Bài 27: Kiểm tra hoàn thiện Secondary Forms & Silhouette toàn thân', tools: ['Flat Color Material', 'ClayPolish', 'Check 45° Angle'] }
-          ]
-        },
-        {
-          id: 'chap_4',
-          title: 'Chương 4: Chi Tiết Bề Mặt, Polypaint, Tạo Dáng & Render Xuất File (8 Bài)',
-          lessons: [
-            { id: 'c4_l28', title: 'Bài 28: Chi tiết Tertiary Forms (Vân da, vết xước, Alpha & DragRect)', tools: ['DragRect Stroke', 'Surface Noise', 'Morph Target'] },
-            { id: 'c4_l29', title: 'Bài 29: Project All — Chuyển toàn bộ chi tiết từ lưới dày sang lưới ZRemesher', tools: ['Subtool > Project All', 'ZProject Brush'] },
-            { id: 'c4_l30', title: 'Bài 30: Tô màu trực tiếp lên nhân vật với Polypaint & ZColor', tools: ['Colorize', 'RGB Intensity', 'Mask By Cavity'] },
-            { id: 'c4_l31', title: 'Bài 31: Mở UV tự động bằng UV Master (Unwrap & Enable Control Painting)', tools: ['ZPlugin > UV Master', 'Protect / Attract'] },
-            { id: 'c4_l32', title: 'Bài 32: Tạo dáng nhân vật (Posing) bằng Transpose Master (TPoseMesh)', tools: ['ZPlugin > Transpose Master', 'Mask & Gizmo Rotate'] },
-            { id: 'c4_l33', title: 'Bài 33: Tối ưu số lượng lưới bằng Decimation Master để xuất sang Maya/Sketchfab', tools: ['Decimation Master', 'Pre-process Current', 'Export .OBJ/.FBX'] },
-            { id: 'c4_l34', title: 'Bài 34: Thiết lập ánh sáng LightCap, Material & BPR Render trong ZBrush', tools: ['BPR Render', 'LightCap', 'BPR Filters'] },
-            { id: 'c4_l35', title: 'Bài 35: Đồ án cuối khóa — Xuất Turntable & Đăng tác phẩm lên Portfolio 3D', tools: ['Movie > Turntable', 'Export .OBJ/.GLB', 'Smart Portfolio'] }
-          ]
-        }
-      ];
-
-      const baseDate = new Date(startStr + 'T00:00:00');
-      let globalIdx = 0;
-      chaps.forEach(c => {
-        c.lessons.forEach(l => {
-          const d = new Date(baseDate);
-          d.setDate(d.getDate() + globalIdx * pace);
-          l.date = d.toISOString().split('T')[0];
-          globalIdx++;
-        });
-      });
-      return chaps;
+    function getSavedApiKey() {
+      try { return (localStorage.getItem(API_KEY_STORAGE) || '').trim(); } catch (e) { return ''; }
     }
 
-    // 24+ Video Thực Tế Có Thumbnail Thật Từ YouTube CDN
+    function getSavedModel() {
+      try { return localStorage.getItem(API_MODEL_STORAGE) || 'gemini-3-flash-preview'; } catch (e) { return 'gemini-3-flash-preview'; }
+    }
+
+    function updateApiKeyHeaderBadge() {
+      const key = getSavedApiKey();
+      const statusEl = document.getElementById('headerApiKeyStatus');
+      const btnEl = document.getElementById('headerApiKeyBtn');
+      const inputEl = document.getElementById('userGeminiApiKeyInput');
+      const modelEl = document.getElementById('userGeminiModelSelect');
+
+      if (inputEl && key) inputEl.value = key;
+      if (modelEl) modelEl.value = getSavedModel();
+
+      if (statusEl && btnEl) {
+        if (key) {
+          statusEl.textContent = 'AI Key: Đã Kết Nối';
+          btnEl.classList.remove('btn-orange');
+          btnEl.classList.add('btn-sketchfab');
+        } else {
+          statusEl.textContent = 'Gắn Google API Key';
+          btnEl.classList.add('btn-orange');
+          btnEl.classList.remove('btn-sketchfab');
+        }
+      }
+    }
+
+    function saveUserGeminiApiKey() {
+      const val = (document.getElementById('userGeminiApiKeyInput').value || '').trim();
+      const mod = document.getElementById('userGeminiModelSelect').value || 'gemini-3-flash-preview';
+      try {
+        localStorage.setItem(API_KEY_STORAGE, val);
+        localStorage.setItem(API_MODEL_STORAGE, mod);
+      } catch (e) {}
+      updateApiKeyHeaderBadge();
+      closeModal('apiKeyModal');
+      showToast(val ? 'Đã lưu Google Gemini API Key thành công!' : 'Đã chuyển về chế độ API mặc định.');
+    }
+
+    function clearUserGeminiApiKey() {
+      try { localStorage.removeItem(API_KEY_STORAGE); } catch (e) {}
+      document.getElementById('userGeminiApiKeyInput').value = '';
+      document.getElementById('apiKeyTestResult').textContent = 'Đã xóa API Key cá nhân.';
+      updateApiKeyHeaderBadge();
+    }
+
+    async function callGeminiAPI(payload, customModel) {
+      const apiKey = getSavedApiKey(); // Nếu để trống trong Canvas, môi trường sẽ tự cấp; nếu trên GitHub Pages, dùng key người dùng nhập
+      const model = customModel || getSavedModel() || 'gemini-3-flash-preview';
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+      const delays = [1000, 2000, 4000];
+      let lastErr = null;
+
+      for (let attempt = 0; attempt <= delays.length; attempt++) {
+        try {
+          const res = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(`HTTP ${res.status}: ${errText}`);
+          }
+          const data = await res.json();
+          const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
+          if (!text) throw new Error('Empty response from Gemini');
+          return text;
+        } catch (err) {
+          lastErr = err;
+          if (attempt < delays.length) {
+            await new Promise(r => setTimeout(r, delays[attempt]));
+          }
+        }
+      }
+      throw lastErr;
+    }
+
+    async function testUserGeminiApiKey() {
+      const btn = document.getElementById('testApiKeyBtn');
+      const resBox = document.getElementById('apiKeyTestResult');
+      const tempKey = (document.getElementById('userGeminiApiKeyInput').value || '').trim();
+      const tempModel = document.getElementById('userGeminiModelSelect').value || 'gemini-3-flash-preview';
+      if (tempKey) {
+        try { localStorage.setItem(API_KEY_STORAGE, tempKey); localStorage.setItem(API_MODEL_STORAGE, tempModel); } catch (e) {}
+        updateApiKeyHeaderBadge();
+      }
+
+      btn.disabled = true;
+      resBox.innerHTML = `<span class="text-sky-400"><i class="fa-solid fa-spinner fa-spin"></i> Đang kiểm tra kết nối tới Google Gemini (${tempModel})...</span>`;
+      try {
+        const reply = await callGeminiAPI({
+          contents: [{ parts: [{ text: 'Trả lời ngắn gọn 1 câu tiếng Việt: Xin chào, kết nối Gemini AI cho 3D Studio Hub đã sẵn sàng!' }] }]
+        }, tempModel);
+        resBox.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> Kết nối thành công: "${reply.trim()}"</span>`;
+      } catch (e) {
+        resBox.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Không thể kết nối. Hãy kiểm tra lại mã API Key (AIza...) của bạn!</span>`;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // KHO DỮ LIỆU PINTEREST & ARTSTATION 3D CHARACTER REF WALL (TRANG 4)
+    // Hoàn toàn là ảnh sản phẩm điêu khắc, tượng Bust, Anatomy, Armor & Figure (Không dùng ảnh YouTube!)
+    // -------------------------------------------------------------------------
+    function buildDefaultPinterestRefs() {
+      return [
+        {
+          id: 'pin_1',
+          title: 'Classical Female Marble Bust — Facial Planes & Soft Cheek Transitions',
+          artist: ' Louvremuseum / Sculpture Reference Archive',
+          category: 'Female Bust & Portrait',
+          software: ['ZBrush', 'Anatomy Ref', 'Portrait 85mm'],
+          likes: '18.4K',
+          saved: true,
+          aspectHeight: 'h-80',
+          beautyImg: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=female+bust+sculpt+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=female+bust+sculpture+anatomy+zbrush+reference',
+          tags: ['#FemaleBust', '#FacialAnatomy', '#SoftPlanes', '#Portrait85mm'],
+          breakdown: 'Nghiên cứu chuyển tiếp khối mềm mại giữa hốc mắt, sống mũi, gò má và đường viền hàm dưới của gương mặt nữ dưới ánh sáng Key Light 45 độ.'
+        },
+        {
+          id: 'pin_2',
+          title: 'Classical Greco-Roman Male Torso & Ribcage Musculature',
+          artist: 'Fine Art Ecorche & Classical Sculpture',
+          category: 'Anatomy & Ecorche',
+          software: ['ZBrush', 'Anatomy', 'ClayBuildup'],
+          likes: '24.1K',
+          saved: true,
+          aspectHeight: 'h-96',
+          beautyImg: 'https://images.unsplash.com/photo-1549887534-1541e9326642?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=male+torso+anatomy+sculpt+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=classical+torso+sculpture+anatomy+reference+zbrush',
+          tags: ['#TorsoAnatomy', '#Ecorche', '#MuscleFlow', '#PrimaryForms'],
+          breakdown: 'Tỷ lệ vàng giữa cơ ngực lớn (Pectoralis Major), cơ bụng (Rectus Abdominis), cơ răng trước (Serratus Anterior) và khung chậu.'
+        },
+        {
+          id: 'pin_3',
+          title: 'Stylized Anime / Semi-Realistic Neon Character Portrait Lighting',
+          artist: 'Digital 3D Character Lighting Showcase',
+          category: 'Anime & Stylized',
+          software: ['ZBrush', 'Blender', 'Marmoset Toolbag'],
+          likes: '15.9K',
+          saved: true,
+          aspectHeight: 'h-72',
+          beautyImg: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=stylized+anime+character+3d+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=stylized+3d+anime+character+model+artstation',
+          tags: ['#AnimeStylized', '#SemiRealistic', '#RimLight', '#3DCharacter'],
+          breakdown: 'Cách phối hợp Rim Light màu lạnh và Key Light ấm để tôn lên đường viền Silhouette sắc nét của nhân vật 3D Stylized.'
+        },
+        {
+          id: 'pin_4',
+          title: 'Gothic Knight Heavy Plate Armor & Helmet Engraving Reference',
+          artist: 'Historical & Dark Fantasy Armor Archive',
+          category: 'Armor & Hard-Surface',
+          software: ['ZBrush ZModeler', 'Maya', 'Substance Painter'],
+          likes: '19.3K',
+          saved: false,
+          aspectHeight: 'h-96',
+          beautyImg: 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=knight+armor+3d+character+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=dark+fantasy+knight+armor+3d+sculpt+reference',
+          tags: ['#HardSurface', '#KnightArmor', '#ZModeler', '#MetalBevel'],
+          breakdown: 'Cấu trúc khớp nối giáp vai (Pauldrons), mũ sắt (Visor) và cách vát mép kim loại bắt sáng chuẩn game AAA Dark Fantasy.'
+        },
+        {
+          id: 'pin_5',
+          title: 'Neoclassical Draped Flowing Cloth & Hair Locks Sculpture',
+          artist: 'Classical Drapery & Hair Study',
+          category: 'Hair & Drapery',
+          software: ['ZBrush', 'CurveTubes', 'Marvelous Designer'],
+          likes: '14.2K',
+          saved: false,
+          aspectHeight: 'h-80',
+          beautyImg: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=sculpting+cloth+drapery+hair+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=drapery+cloth+folds+sculpture+reference+zbrush',
+          tags: ['#ClothFolds', '#HairSculpt', '#Drapery', '#SecondaryForms'],
+          breakdown: 'Nhịp điệu của các nếp gấp vải (Pipe Folds, Zig-Zag Folds) và cách phân cụm các lọn tóc lớn – vừa – nhỏ (Big, Medium, Small).'
+        },
+        {
+          id: 'pin_6',
+          title: 'Expressive Character Head Bust — Cranial Landmarks & Brow Ridge',
+          artist: 'Master Sculpture Portrait Archive',
+          category: 'Anatomy & Ecorche',
+          software: ['ZBrush', 'TrimDynamic', 'DamStandard'],
+          likes: '21.7K',
+          saved: false,
+          aspectHeight: 'h-72',
+          beautyImg: 'https://images.unsplash.com/photo-1561839561-b13bcfe95249?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=head+anatomy+planes+sculpt+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=head+planes+asaro+sculpture+anatomy+zbrush',
+          tags: ['#HeadAnatomy', '#CranialLandmarks', '#AsaroPlanes', '#BustSculpt'],
+          breakdown: 'Các mốc xương hộp sọ quyết định thần thái: cung mày (Superciliary Arch), xương gò má (Zygomatic) và độ sâu hốc mắt.'
+        },
+        {
+          id: 'pin_7',
+          title: 'Cyberpunk Futuristic Mecha Suit & Hard-Surface Character Bust',
+          artist: 'Sci-Fi Character Concept 3D',
+          category: 'Armor & Hard-Surface',
+          software: ['ZBrush Live Boolean', 'Marmoset', 'KeyShot'],
+          likes: '16.8K',
+          saved: false,
+          aspectHeight: 'h-88',
+          beautyImg: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=cyberpunk+mecha+character+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=cyberpunk+hard+surface+character+sculpt+zbrush',
+          tags: ['#SciFiMecha', '#LiveBoolean', '#PanelLoops', '#Cyberpunk3D'],
+          breakdown: 'Phân tách các mảng Panel Loops lớn và chi tiết cơ khí nhỏ theo quy tắc 70% mảng nghỉ (Rest Area) và 30% chi tiết dày (Detail Area).'
+        },
+        {
+          id: 'pin_8',
+          title: 'Serene East-Asian Stylized Female Profile & Jawline Study',
+          artist: 'Character Portrait Reference',
+          category: 'Female Bust & Portrait',
+          software: ['ZBrush', 'Maya', 'Arnold Render'],
+          likes: '22.5K',
+          saved: true,
+          aspectHeight: 'h-96',
+          beautyImg: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=stylized+female+portrait+3d+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=semi+realistic+female+face+3d+zbrush+reference',
+          tags: ['#SemiRealistic', '#FemaleProfile', '#ELine', '#SkinSSS'],
+          breakdown: 'Chuẩn đường E-Line ở góc nghiêng: đỉnh mũi – môi trên – môi dưới – đỉnh cằm và hiệu ứng tán xạ dưới da (Subsurface Scattering).'
+        },
+        {
+          id: 'pin_9',
+          title: 'Mythological Winged Statue — Dynamic Contrapposto Pose & Balance',
+          artist: 'Classical Gesture & Figure Study',
+          category: 'Anatomy & Ecorche',
+          software: ['ZBrush Transpose Master', 'Anatomy'],
+          likes: '17.6K',
+          saved: false,
+          aspectHeight: 'h-96',
+          beautyImg: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=contrapposto+full+body+sculpt+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=contrapposto+statue+pose+anatomy+reference',
+          tags: ['#Contrapposto', '#FigurePose', '#LineOfAction', '#FullBodySculpt'],
+          breakdown: 'Nguyên lý Contrapposto: khi dồn trọng tâm lên một chân, trục hông và trục vai sẽ nghiêng ngược chiều nhau tạo đường cong chữ S sống động.'
+        },
+        {
+          id: 'pin_10',
+          title: 'Collectible Fantasy Statue — Creature & Dragon Scale Detailing',
+          artist: 'Prime 1 / Collectible Statue Concept',
+          category: 'Creature & Fantasy',
+          software: ['ZBrush', 'VDM Brushes', 'DragRect Alpha'],
+          likes: '13.9K',
+          saved: false,
+          aspectHeight: 'h-80',
+          beautyImg: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=collectible+fantasy+statue+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=anime+collectible+figure+statue+3d+sculpt+zbrush',
+          tags: ['#CollectibleFigure', '#AnimeStatue', '#DynamicPose', '#3DPrinting'],
+          breakdown: 'Thiết kế bố cục tượng Collectible 360 độ: hướng bay của tà áo và tóc dẫn mắt người xem thẳng lên khuôn mặt nhân vật chính.'
+        },
+        {
+          id: 'pin_11',
+          title: 'Delicate Female Hands & Finger Phalanges Gesture Sculpture',
+          artist: 'Anatomical Hand Study Archive',
+          category: 'Anatomy & Ecorche',
+          software: ['ZBrush', 'MoveTopological', 'ZSphere'],
+          likes: '19.8K',
+          saved: false,
+          aspectHeight: 'h-72',
+          beautyImg: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=hand+anatomy+sculpt+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=hand+sculpture+anatomy+reference+zbrush',
+          tags: ['#HandAnatomy', '#FingerGesture', '#ZSphere', '#BoneLandmarks'],
+          breakdown: 'Độ cong hình quạt của 4 khớp xương bàn tay (Knuckles) và sự lệch góc tự nhiên giữa các đốt ngón tay khi thả lỏng.'
+        },
+        {
+          id: 'pin_12',
+          title: 'Stylized Arcane / Fantasy Character Bust — Painterly 3D Shading',
+          artist: 'Stylized 3D Art Showcase',
+          category: 'Anime & Stylized',
+          software: ['ZBrush', 'Substance Painter', 'Blender'],
+          likes: '27.4K',
+          saved: true,
+          aspectHeight: 'h-88',
+          beautyImg: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=900&q=80',
+          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=arcane+stylized+character+bust+zbrush',
+          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=stylized+3d+character+bust+artstation+zbrush',
+          tags: ['#StylizedBust', '#HandPainted3D', '#SharpPlanes', '#CharacterDesign'],
+          breakdown: 'Kết hợp các diện vát sắc (TrimDynamic) trong ZBrush với việc tô nhấn sáng tối trên các gờ xương gò má và sống mũi.'
+        }
+      ];
+    }
+
+    // Kho mẫu bổ sung để khi người dùng kéo xuống (Infinite Scroll) ở Trang 4 sẽ sinh thêm liên tục
+    const EXTRA_PINTEREST_POOL = [
+      {
+        title: 'Baroque Marble Angel — Feathers & Facial Serenity Study',
+        artist: 'Classical Sculpture Reference',
+        category: 'Female Bust & Portrait',
+        img: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=900&q=80',
+        q: 'angel+sculpture+bust+zbrush+reference',
+        tags: ['#ClassicalBust', '#FeatherSculpt', '#FacialHarmony']
+      },
+      {
+        title: 'Dark Fantasy Samurai & Ronin Layered Armor Concept',
+        artist: 'AAA Character Armor Reference',
+        category: 'Armor & Hard-Surface',
+        img: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?auto=format&fit=crop&w=900&q=80',
+        q: 'samurai+armor+3d+character+zbrush+artstation',
+        tags: ['#SamuraiArmor', '#LayeredPlates', '#HardSurface3D']
+      },
+      {
+        title: 'Stylized Female Eyelashes, Iris Depth & Lip Volume Study',
+        artist: '3D Portrait Beauty Archive',
+        category: 'Female Bust & Portrait',
+        img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=900&q=80',
+        q: 'female+face+lips+eyes+3d+sculpt+zbrush',
+        tags: ['#EyeAnatomy', '#LipVolume', '#PortraitSculpt']
+      },
+      {
+        title: 'Sci-Fi Cybernetic Android Female Bust — Chrome & Skin Contrast',
+        artist: 'Concept 3D Art Showcase',
+        category: 'Anime & Stylized',
+        img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=900&q=80',
+        q: 'cybernetic+female+bust+zbrush+artstation',
+        tags: ['#CyberneticBust', '#MaterialContrast', '#SciFi3D']
+      },
+      {
+        title: 'Dynamic Hair Flow & Braided Locks 3D Reference',
+        artist: 'Hair & Grooming Study',
+        category: 'Hair & Drapery',
+        img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80',
+        q: 'stylized+braided+hair+sculpt+zbrush+reference',
+        tags: ['#HairFlow', '#CurveTubes', '#Braids3D']
+      },
+      {
+        title: 'Mythic Monster & Dragon Horn Organic Surface Alpha Study',
+        artist: 'Creature Sculpting Reference',
+        category: 'Creature & Fantasy',
+        img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=900&q=80',
+        q: 'creature+monster+horn+sculpt+zbrush+artstation',
+        tags: ['#CreatureDesign', '#OrganicHorns', '#TertiaryDetails']
+      }
+    ];
+
+    // 24 Video Thực Tế Cho Trang 3 (Kho Video Tutorials)
     function buildDefaultVideos() {
       return [
         { id: 'v1', videoId: '_7NV6f_xOYQ', title: 'How to Sculpt Anything! 10 Handy Tips 🤌', channel: 'YanSculpts', duration: '06:32', views: '175K views', category: 'ZBrush Workflow', points: ['Chia mọi vật thể phức tạp thành các khối nguyên thủy (Sphere, Cylinder, Box).', 'Luôn giữ mật độ lưới thấp ở giai đoạn đầu để dễ chỉnh tỷ lệ.', 'Kiểm tra Silhouette liên tục thay vì chỉ nhìn từ góc chính diện.'] },
@@ -1079,23 +1579,10 @@
         { id: 'v9', videoId: '1eCZzBTfOl4', title: 'Skull Anatomy for Artists in ZBrush', channel: 'SpeedChar', duration: '1:03:34', views: '104K views', category: 'Anatomy', points: ['Nắm vững khung xương hộp sọ trước khi đắp cơ và da.', 'Gò má (Zygomatic arch) và hốc mắt quyết định thần thái khuôn mặt.', 'Cách dùng TrimDynamic vát phẳng các diện sọ.'] },
         { id: 'v10', videoId: 'iAVGcCuSjxA', title: 'Top Tips for Improving Your ZBrush Sculpts', channel: 'FlippedNormals', duration: '42:12', views: '320K views', category: 'ZBrush Workflow', points: ['Tại sao không nên bật Smooth quá nhiều làm mất khối.', 'Cách đọc ánh sáng và bóng đổ trên bề mặt đất sét xám.', 'Luyện thói quen đối chiếu Reference liên tục ở nhiều góc.'] },
         { id: 'v11', videoId: '6azPX_GHxWk', title: 'How to Sculpt the Torso - Simple Method by a Pro Sculptor', channel: 'YanSculpts', duration: '47:22', views: '295K views', category: 'Anatomy', points: ['Quy đổi lồng ngực và khung chậu về 2 khối hộp đơn giản.', 'Điểm bám của cơ ngực lớn (Pectoralis) vào xương cánh tay.', 'Nhịp điệu cơ bụng và cơ liên sườn.'] },
-        { id: 'v12', videoId: 'LAMcL2S6xp8', title: 'How to Sculpt the Skull for Beginners - The 5 Stages', channel: 'YanSculpts', duration: '11:50', views: '125K views', category: 'Anatomy', points: ['5 bước dựng hộp sọ cực nhanh từ khối cầu.', 'Cách khoét hốc mắt và hốc mũi đúng tỷ lệ vàng.', 'Ứng dụng làm nền tảng cho mọi nhân vật 3D.'] },
-        { id: 'v13', videoId: 'WFqyj6lKgik', title: 'Stylised Sculpted Hair in ZBrush', channel: 'Pablo Muñoz Gómez', duration: '43:17', views: '53K views', category: 'Hair & Cloth', points: ['Thiết lập cọ CurveTubes để kéo từng lọn tóc mượt mà.', 'Phân chia khối tóc chính (Primary Locks) trước khi tách lọn nhỏ.', 'Tạo độ phồng và nhịp điệu tự nhiên cho mái tóc.'] },
-        { id: 'v14', videoId: 'E1l-yolrK7w', title: 'How To Make Stylized HAIR in ZBrush', channel: 'Nesivart', duration: '32:02', views: '51K views', category: 'Hair & Cloth', points: ['Bí quyết dựng tóc Anime/Stylized có chiều sâu 3D ở mọi góc nhìn.', 'Cách gộp và làm mượt chân tóc bằng DynaMesh/ZRemesher.', 'Tạo các sợi tóc bay (Flyaway hairs) tạo điểm nhấn.'] },
-        { id: 'v15', videoId: 'ofIYDYYDiK8', title: 'ZBrush Tips | Hướng dẫn tạo tóc Stylized trong ZBrush', channel: 'CG3D', duration: '22:19', views: '8.5K views', category: 'Hair & Cloth', points: ['Hướng dẫn tiếng Việt chi tiết cách dùng IMM Hair Brush.', 'Cách điều chỉnh đường cong Curve không bị xoắn.', 'Mẹo tách Polygroup cho từng lớp tóc trong và ngoài.'] },
-        { id: 'v16', videoId: 'cuwn9IpDI0M', title: 'How to Sculpt HardSurface in ZBrush | Full Workflow', channel: 'Art of Haf', duration: '17:41', views: '99K views', category: 'Hard-Surface', points: ['Quy trình dựng giáp trụ và cơ khí sắc nét bằng Mask + Extract.', 'Kết hợp ZRemesher, Polish By Features và ZModeler.', 'Cách vát cạnh Bevel bắt sáng kim loại chuẩn AAA.'] },
-        { id: 'v17', videoId: 'skTggVgLOmg', title: 'Clothes Sculpting in ZBrush Made Easy | Full Guide', channel: 'Art of Haf', duration: '14:17', views: '72K views', category: 'Hair & Cloth', points: ['Phân biệt nếp gấp căng (Tension folds) và nếp gấp trùng (Drop folds).', 'Sử dụng ZBrush Dynamics kết hợp điêu khắc tay.', 'Cách tạo đường may và độ dày mép vải.'] },
-        { id: 'v18', videoId: 'rwTHR0umNpg', title: 'FINALLY! How to Sculpt Cloth Painlessly in ZBrush', channel: 'savannahXYZ', duration: '00:36', views: '2.3M views', category: 'Hair & Cloth', points: ['Mẹo dùng cọ Cloth và Dynamics nhanh gọn trong 36 giây.', 'Kiểm soát nếp nhăn tự nhiên ở khuỷu tay và đầu gối.', 'Giữ form quần áo sạch sẽ không bị nhàu nát.'] },
-        { id: 'v19', videoId: 'Lfen-BSwWcE', title: 'Realistic Portraiture with Kris Costa (The Antropus)', channel: 'Maxon ZBrush', duration: '1:13:25', views: '203K views', category: 'Anatomy', points: ['Bậc thầy chân dung Kris Costa chia sẻ cách quan sát giải phẫu mặt.', 'Cách dựng lỗ chân lông và chi tiết da hoàn toàn bằng cọ chuẩn.', 'Thiết lập ánh sáng và sắc độ da chân thực.'] },
-        { id: 'v20', videoId: 'XRbgPXQAdpI', title: 'ZBrush Masters: The Art of Hossein Diba', channel: 'Maxon ZBrush', duration: '2:12:36', views: '25K views', category: 'Anatomy', points: ['Cách bắt thần thái (Likeness) nhân vật từ ảnh tham chiếu.', 'Kiểm soát Silhouette ở mọi góc xoay camera.', 'Xử lý bề mặt da, râu và tóc chân thực.'] },
-        { id: 'v21', videoId: 'Ny5uvEn7fHo', title: 'How I Blockout Characters: Live ZBrush Demo', channel: 'Follygon', duration: '32:43', views: '44K views', category: 'Anime & Stylized', points: ['Phương pháp dựng Blockout toàn thân nhân vật nữ Stylized nhanh.', 'Sử dụng các khối cầu và trụ tách biệt để dễ chỉnh dáng (Pose).', 'Tạo đường cong chữ S (Line of Action) cuốn hút.'] },
-        { id: 'v22', videoId: 'GivEY7zfGAs', title: 'ZBrush and Chill: Anime Girl Sculpting', channel: 'Follygon', duration: '31:26', views: '10K views', category: 'Anime & Stylized', points: ['Tỷ lệ đầu, vai và eo đặc trưng của nhân vật nữ Anime 3D.', 'Xử lý khuôn mặt ngọt ngào từ góc nhìn 45 độ.', 'Cách làm sạch bề mặt lưới bằng ZRemesher + Subdivide.'] },
-        { id: 'v23', videoId: 'I4nePXDTrhQ', title: 'The Fastest Way to Retopo in ZBrush', channel: 'Pablo Muñoz Gómez', duration: '35:37', views: '27K views', category: 'Retopo & Render', points: ['Kết hợp Polygroup và ZRemesher Guides để đi lưới vòng quanh mắt miệng.', 'Giữ nguyên chi tiết High-Poly bằng Project All.', 'Chuẩn bị mô hình sạch để đưa sang Maya hoặc Marmoset.'] },
-        { id: 'v24', videoId: '_3f3evwpUmU', title: 'Technical Workflow for AAA Game Characters - Retopology', channel: 'Jesse Sandifer', duration: '24:48', views: '28K views', category: 'Retopo & Render', points: ['Tiêu chuẩn lưới Game AAA tại các Studio lớn.', 'Cách tối ưu mật độ tam giác ở các khớp nối chuyển động.', 'Kiểm tra Silhouette sau khi bake Normal Map.'] }
+        { id: 'v12', videoId: 'WFqyj6lKgik', title: 'Stylised Sculpted Hair in ZBrush', channel: 'Pablo Muñoz Gómez', duration: '43:17', views: '53K views', category: 'Hair & Cloth', points: ['Thiết lập cọ CurveTubes để kéo từng lọn tóc mượt mà.', 'Phân chia khối tóc chính (Primary Locks) trước khi tách lọn nhỏ.', 'Tạo độ phồng và nhịp điệu tự nhiên cho mái tóc.'] }
       ];
     }
 
-    // Bài viết chuyên sâu có ảnh minh họa thực tế
     function buildDefaultArticles() {
       return [
         {
@@ -1104,7 +1591,7 @@
           readTime: '6 phút đọc',
           title: 'Quy Tắc Vàng 3 Cấp Độ Khối: Primary, Secondary & Tertiary Forms',
           summary: 'Bí quyết giúp bức tượng ZBrush của bạn không bao giờ bị "nhão như sáp chảy" (blobby) ngay từ 15 phút đầu tiên.',
-          bannerUrl: 'https://i.ytimg.com/vi/iAVGcCuSjxA/hqdefault.jpg',
+          bannerUrl: 'https://images.unsplash.com/photo-1549887534-1541e9326642?auto=format&fit=crop&w=900&q=80',
           paragraphs: [
             '1. Primary Forms (Khối Chính): Là tỷ lệ tổng thể và đường bóng đổ Silhouette khi nhìn từ xa 5 mét. Ở bước này, chỉ dùng DynaMesh độ phân giải thấp (32-64) và cọ Move lớn.',
             '2. Secondary Forms (Khối Trung): Là sự phân tách giữa các bó cơ, diện phẳng xương gò má, hốc mắt và các cụm tóc lớn. Sử dụng ClayBuildup và TrimDynamic để vát diện bắt sáng.',
@@ -1115,9 +1602,9 @@
           id: 'art_2',
           category: 'Anime & Stylized',
           readTime: '7 phút đọc',
-          title: 'Giải Phẫu Khuôn Mặt Anime Semi-Realistic: Giữ Độ Thật Mà Vẫn Cuốn Hút',
+          title: 'Giải Phẫu Khuôn Mặt Nữ Semi-Realistic: Giữ Độ Thật Mà Vẫn Cuốn Hút',
           summary: 'Sự kết hợp hoàn hảo giữa khung hộp sọ giải phẫu chuẩn và các đường nét thanh tú của nhân vật game Á Đông.',
-          bannerUrl: 'https://i.ytimg.com/vi/I14uAJ063DY/hqdefault.jpg',
+          bannerUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80',
           paragraphs: [
             '1. Luôn bật Camera tiêu cự 85mm (Draw > Angle Of View = 85) trong ZBrush trước khi nặn mặt để tránh hiện tượng méo phình mũi do góc rộng 50mm mặc định.',
             '2. Đường E-Line ở góc nghiêng 90°: Kẻ một đường thẳng từ đỉnh mũi chạm đỉnh cằm — môi trên và môi dưới của nhân vật nữ nên nằm lùi nhẹ vào trong đường này khoảng 1-2mm.',
@@ -1130,7 +1617,7 @@
           readTime: '5 phút đọc',
           title: 'Checklist Kiểm Tra File .OBJ / .FBX Trước Khi Xuất Sang Maya & Sketchfab',
           summary: 'Đảm bảo mô hình 3D sạch lỗi N-Gons, đúng tâm trục tọa độ và hiển thị sắc nét trên mọi trình xem 3D.',
-          bannerUrl: 'https://i.ytimg.com/vi/_3f3evwpUmU/hqdefault.jpg',
+          bannerUrl: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=900&q=80',
           paragraphs: [
             '1. Nếu xuất file High-Poly để xem trên Sketchfab 3D Viewer, hãy chạy Decimation Master giảm xuống khoảng 80.000 – 150.000 Triangles để giữ nguyên chi tiết mà file vẫn nhẹ.',
             '2. Nếu xuất sang Maya để làm Retopology & Rigging, hãy đảm bảo các vòng Edge Loops đồng tâm quanh mắt và miệng để nhân vật biểu cảm mượt mà.'
@@ -1139,202 +1626,16 @@
       ];
     }
 
-    // 24+ Tác Phẩm 3D Sculpt Thực Tế Dẫn Nguồn ArtStation & Pinterest
-    function buildDefaultRefs() {
-      return [
-        {
-          id: 'ref_1',
-          title: 'High Elf Stylized Semi-Realistic Character Sculpt',
-          artist: 'TyCom (Anh Tran) • ArtStation Showcase',
-          category: 'Anime & Stylized',
-          software: ['ZBrush', 'Maya', 'Marmoset Toolbag'],
-          likes: '15.7K',
-          saved: true,
-          videoId: 'I14uAJ063DY',
-          beautyImg: 'https://i.ytimg.com/vi/I14uAJ063DY/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=elf+character+zbrush+sculpt',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=stylized+elf+female+3d+character+sculpt+zbrush',
-          breakdown: 'Tác phẩm mẫu mực về tỷ lệ gương mặt nữ bán tả thực Á Đông: gò má mềm, sống mũi thanh thoát, đôi tai Elf và các lọn tóc phân lớp Big–Medium–Small.'
-        },
-        {
-          id: 'ref_2',
-          title: 'Female Head Anatomy From Sphere (Live Sculpt Breakdown)',
-          artist: 'Nikolay Naydenov (SpeedChar)',
-          category: 'Anatomy / Bust',
-          software: ['ZBrush', 'Blender'],
-          likes: '25.8K',
-          saved: true,
-          videoId: 'wSKsmyV9ISk',
-          beautyImg: 'https://i.ytimg.com/vi/wSKsmyV9ISk/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/nikoto',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=female+head+sculpt+anatomy+zbrush',
-          breakdown: 'Nghiên cứu chuyển tiếp khối mềm mại giữa hốc mắt, lớp mỡ má và đường xương hàm dưới của nhân vật nữ.'
-        },
-        {
-          id: 'ref_3',
-          title: 'Sci-Fi Heavy Armor & Hard-Surface ZBrush Concept',
-          artist: 'Art of Haf • Hard-Surface Masterclass',
-          category: 'Hard-Surface / Mecha',
-          software: ['ZBrush', 'ZModeler', 'KeyShot'],
-          likes: '5.5K',
-          saved: false,
-          videoId: 'cuwn9IpDI0M',
-          beautyImg: 'https://i.ytimg.com/vi/cuwn9IpDI0M/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=hard+surface+armor+zbrush',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=zbrush+hard+surface+armor+sculpt',
-          breakdown: 'Cách tách mảng Panel Loops sắc lẹm, kết hợp vát cạnh Bevel bằng ZModeler để tạo điểm bắt sáng kim loại mạnh mẽ.'
-        },
-        {
-          id: 'ref_4',
-          title: 'Stylized Girl Bust — Big Eyes & Clean Hair Clusters',
-          artist: 'SpeedChar • Stylized Character',
-          category: 'Anime & Stylized',
-          software: ['ZBrush', 'Marmoset'],
-          likes: '3.2K',
-          saved: true,
-          videoId: 'eQKJsKaGD9E',
-          beautyImg: 'https://i.ytimg.com/vi/eQKJsKaGD9E/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=stylized+girl+bust+zbrush',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=stylized+girl+bust+sculpt+zbrush',
-          breakdown: 'Sự cân bằng giữa đôi mắt lớn cách điệu và cấu trúc sọ vững chắc, bờ mi trên dày tạo chiều sâu cuốn hút.'
-        },
-        {
-          id: 'ref_5',
-          title: 'Hyper-Realistic Digital Portraiture & Skin Pore Study',
-          artist: 'Kris Costa (The Antropus)',
-          category: 'Realism / AAA',
-          software: ['ZBrush', 'Arnold'],
-          likes: '18.4K',
-          saved: false,
-          videoId: 'Lfen-BSwWcE',
-          beautyImg: 'https://i.ytimg.com/vi/Lfen-BSwWcE/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/theantropus',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=kris+costa+zbrush+portrait+sculpt',
-          breakdown: 'Đỉnh cao điêu khắc chân dung tả thực: cấu trúc cơ mặt dưới da, nếp nhăn tự nhiên và hệ thống lỗ chân lông Tertiary Forms.'
-        },
-        {
-          id: 'ref_6',
-          title: 'Stylized Sculpted Hair — Dynamic Flow & Volume',
-          artist: 'Pablo Muñoz Gómez (ZBrushGuides)',
-          category: 'Hair & Cloth',
-          software: ['ZBrush', 'CurveTubes'],
-          likes: '6.1K',
-          saved: false,
-          videoId: 'WFqyj6lKgik',
-          beautyImg: 'https://i.ytimg.com/vi/WFqyj6lKgik/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/pablomunozgomez',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=zbrush+stylized+hair+sculpt+tutorial',
-          breakdown: 'Cách phân luồng các lọn tóc theo đường cong chữ S, tạo độ phồng từ chân tóc và tránh các khe hở lộ da đầu.'
-        },
-        {
-          id: 'ref_7',
-          title: 'Male Torso & Ribcage Planar Anatomy Ecorche',
-          artist: 'YanSculpts • Anatomy Study',
-          category: 'Anatomy / Bust',
-          software: ['ZBrush', 'Blender'],
-          likes: '9.8K',
-          saved: false,
-          videoId: '6azPX_GHxWk',
-          beautyImg: 'https://i.ytimg.com/vi/6azPX_GHxWk/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=male+torso+anatomy+sculpt',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=torso+anatomy+sculpt+ecorche+reference',
-          breakdown: 'Bản đồ giải phẫu thân trên: cách cơ ngực lớn luồn dưới cơ Delta vai và sự đan xen giữa cơ răng trước với cơ chéo bụng ngoài.'
-        },
-        {
-          id: 'ref_8',
-          title: 'AAA Game Character Likeness & Realtime Shader',
-          artist: 'Hossein Diba • Character Master',
-          category: 'Realism / AAA',
-          software: ['ZBrush', 'Maya', 'Marmoset'],
-          likes: '21.0K',
-          saved: false,
-          videoId: 'XRbgPXQAdpI',
-          beautyImg: 'https://i.ytimg.com/vi/XRbgPXQAdpI/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/hossein_diba',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=hossein+diba+3d+character+sculpt',
-          breakdown: 'Nghệ thuật bắt thần thái nhân vật (Likeness) nhờ độ chính xác tuyệt đối của khoảng cách hai mắt, độ rộng cánh mũi và khóe miệng.'
-        },
-        {
-          id: 'ref_9',
-          title: 'Hatsune Miku Anime Figure Sculpt & Pose Breakdown',
-          artist: 'Aurélien • Collectible Figure Sculpt',
-          category: 'Anime & Stylized',
-          software: ['ZBrush', 'KeyShot'],
-          likes: '4.3K',
-          saved: false,
-          videoId: 'atk1G7lBlPI',
-          beautyImg: 'https://i.ytimg.com/vi/atk1G7lBlPI/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=anime+figure+zbrush+sculpt',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=anime+figure+3d+sculpt+zbrush+gray+clay',
-          breakdown: 'Tỷ lệ chuẩn của dòng tượng Anime Figure Nhật Bản: đường cong cơ thể uyển chuyển, tà váy bay và hai lọn tóc Twin-tails cân bằng trọng tâm.'
-        },
-        {
-          id: 'ref_10',
-          title: 'Realistic Drapery & Cloth Folds Sculpting Guide',
-          artist: 'Art of Haf • Cloth Study',
-          category: 'Hair & Cloth',
-          software: ['ZBrush', 'Marvelous Designer'],
-          likes: '7.4K',
-          saved: false,
-          videoId: 'skTggVgLOmg',
-          beautyImg: 'https://i.ytimg.com/vi/skTggVgLOmg/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=cloth+folds+sculpt+zbrush',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=sculpting+cloth+folds+drapery+reference+zbrush',
-          breakdown: 'Phân tích các điểm neo lực kéo (Anchor Points) tại vai và khuỷu tay tạo ra nếp gấp hình ống (Pipe folds) và hình chữ Z.'
-        },
-        {
-          id: 'ref_11',
-          title: 'Human Skull & Facial Landmarks Planar Study',
-          artist: 'SpeedChar • Anatomy Foundation',
-          category: 'Anatomy / Bust',
-          software: ['ZBrush'],
-          likes: '8.9K',
-          saved: false,
-          videoId: '1eCZzBTfOl4',
-          beautyImg: 'https://i.ytimg.com/vi/1eCZzBTfOl4/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=skull+planes+asaro+zbrush',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=skull+anatomy+planes+of+the+head+sculpt',
-          breakdown: 'Các mốc xương quan trọng không bao giờ bị che lấp bởi cơ: cung mày, xương gò má, sống mũi và góc xương hàm dưới.'
-        },
-        {
-          id: 'ref_12',
-          title: 'Sci-Fi Trooper Helmet & Mech Armor Suit',
-          artist: 'Pavel Osipov • Concept Sculpt',
-          category: 'Hard-Surface / Mecha',
-          software: ['ZBrush', 'Live Boolean'],
-          likes: '4.1K',
-          saved: false,
-          videoId: '25rrLhYKZjA',
-          beautyImg: 'https://i.ytimg.com/vi/25rrLhYKZjA/hqdefault.jpg',
-          artstationUrl: 'https://www.artstation.com/search?sort_by=relevance&query=scifi+trooper+armor+zbrush',
-          pinterestUrl: 'https://www.pinterest.com/search/pins/?q=scifi+armor+helmet+zbrush+sculpt',
-          breakdown: 'Ứng dụng Live Boolean và TrimDynamic để vát các mảng giáp cơ khí đan xen với lớp vải lót bên trong.'
-        }
-      ];
-    }
-
-    // Kho bổ sung để khi người dùng kéo xuống (Infinite Scroll) sẽ tự động sinh tiếp không giới hạn
-    const EXTRA_REF_POOL = [
-      { title: 'Kyka Stylized Female Warrior Design', artist: 'Artefact VFX', category: 'Anime & Stylized', videoId: 'enfDHXD-LKs', q: 'stylized+female+warrior+zbrush' },
-      { title: 'Stylized Hair Layers & Strands Breakdown', artist: 'Nesivart Studio', category: 'Hair & Cloth', videoId: 'E1l-yolrK7w', q: 'stylized+hair+sculpt+zbrush' },
-      { title: 'Full Body Character Blockout & Gesture', artist: 'Follygon', category: 'Anime & Stylized', videoId: 'Ny5uvEn7fHo', q: 'character+blockout+zbrush+follygon' },
-      { title: 'God of War Anatomy & Armor Study (Grassetti Style)', artist: 'Bento Ribeiro • Grassetti Study', category: 'Realism / AAA', videoId: 'zTkmMk5RxeM', q: 'raf+grassetti+anatomy+sculpt+zbrush' },
-      { title: '30 Stylized Characters Sculpt Challenge', artist: 'Stylized Station', category: 'Anime & Stylized', videoId: 'gZh1p8amjGQ', q: 'stylized+character+zbrush+artstation' },
-      { title: 'Ma.K.Kauz Heavy Mecha Suit From Sphere', artist: 'Tetsuo Shima 41', category: 'Hard-Surface / Mecha', videoId: 'Cj0EuZW_RZc', q: 'mecha+suit+zbrush+hard+surface' },
-      { title: 'AAA Game Character Retopology & UV Wireframe', artist: 'Jesse Sandifer', category: 'Realism / AAA', videoId: '_3f3evwpUmU', q: 'game+character+wireframe+topology+artstation' },
-      { title: 'Female Face Proportions & 45-Degree Check', artist: 'SpeedChar', category: 'Anatomy / Bust', videoId: '9AQzPgepa5o', q: 'female+face+proportions+sculpt+zbrush' }
-    ];
-
     function buildDefaultPortfolio() {
       return [
         {
           id: 'port_1',
-          title: 'Celestial Elf Maiden — Bust 3D Sculpt',
+          title: 'Seraphina — Female Bust 3D Sculpt',
           software: 'ZBrush, Maya, Marmoset Toolbag 4',
           polycount: '42,400 Tris',
           impactScore: 96,
           tags: ['#AnimeStylized', '#SemiRealistic', '#CharacterBust', '#ZBrush'],
-          thumbUrl: 'https://i.ytimg.com/vi/I14uAJ063DY/hqdefault.jpg',
+          thumbUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80',
           descVN: 'Mô hình bán thân nhân vật nữ điêu khắc trong ZBrush với tiêu cự 85mm, tối ưu lưới tứ giác sạch trong Maya.',
           descEN: 'Stylized semi-realistic female bust sculpted in ZBrush (85mm portrait lens) with clean quad retopology in Maya.',
           proceduralShape: 'bust'
@@ -1346,12 +1647,16 @@
           polycount: '18,600 Tris',
           impactScore: 92,
           tags: ['#HardSurface', '#GameReady', '#WeaponProp'],
-          thumbUrl: 'https://i.ytimg.com/vi/cuwn9IpDI0M/hqdefault.jpg',
+          thumbUrl: 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=900&q=80',
           descVN: 'Giáp vai và vũ khí dựng bằng ZModeler kết hợp Live Boolean, vát cạnh Bevel bắt sáng sắc nét chuẩn Game Engine.',
           descEN: 'Game-ready armor & weapon modeled with ZModeler and Live Boolean, featuring crisp bevel highlights and optimized UVs.',
           proceduralShape: 'sword'
         }
       ];
+    }
+
+    function getTodayDateString() {
+      return new Date().toISOString().split('T')[0];
     }
 
     function loadStudioState() {
@@ -1361,18 +1666,19 @@
       } catch (e) {
         studioState = {};
       }
-      if (!studioState.chapters || !studioState.chapters.length) {
-        studioState.courseTitle = 'Khóa tự học 3D - Tự học ZBrush (GV: Cường CG - Udemy)';
-        studioState.startDate = '2026-11-01';
+      // QUAN TRỌNG: Mặc định Trang 1 để trống hoàn toàn (chapters = []), không ép khóa học cố định!
+      if (!Array.isArray(studioState.chapters)) {
+        studioState.courseTitle = '';
+        studioState.startDate = getTodayDateString();
         studioState.paceDays = 2;
-        studioState.chapters = buildDefaultCuongCGSyllabus('2026-11-01', 2);
+        studioState.chapters = [];
       }
       if (!studioState.completedLessons) studioState.completedLessons = {};
-      if (typeof studioState.xp !== 'number') studioState.xp = 150;
-      if (typeof studioState.streak !== 'number') studioState.streak = 3;
-      if (!studioState.videos || studioState.videos.length < 12) studioState.videos = buildDefaultVideos();
+      if (typeof studioState.xp !== 'number') studioState.xp = 100;
+      if (typeof studioState.streak !== 'number') studioState.streak = 1;
+      if (!studioState.videos || studioState.videos.length < 8) studioState.videos = buildDefaultVideos();
       if (!studioState.articles || !studioState.articles.length) studioState.articles = buildDefaultArticles();
-      if (!studioState.refs || studioState.refs.length < 6) studioState.refs = buildDefaultRefs();
+      if (!studioState.refs || studioState.refs.length < 8) studioState.refs = buildDefaultPinterestRefs();
       if (!studioState.portfolio || !studioState.portfolio.length) studioState.portfolio = buildDefaultPortfolio();
       if (!studioState.availableStyleTags || !studioState.availableStyleTags.length) {
         studioState.availableStyleTags = [
@@ -1383,6 +1689,9 @@
       if (!studioState.selectedCritiqueTags || !studioState.selectedCritiqueTags.length) {
         studioState.selectedCritiqueTags = ['#AnimeStylized', '#SemiRealistic', '#BustSculpt'];
       }
+
+      const startInp = document.getElementById('scheduleStartDate');
+      if (startInp) startInp.value = studioState.startDate || getTodayDateString();
     }
 
     function saveStudioState() {
@@ -1415,21 +1724,59 @@
       const rpLabel = document.getElementById('roadmapProgressLabel');
       const rpBar = document.getElementById('roadmapProgressBar');
 
-      if (sEl) sEl.textContent = `${studioState.streak || 3} ngày`;
-      if (lEl) lEl.textContent = `Lv.${lv} • ${studioState.xp || 150} XP`;
+      if (sEl) sEl.textContent = `${studioState.streak || 1} ngày`;
+      if (lEl) lEl.textContent = `Lv.${lv} • ${studioState.xp || 100} XP`;
       if (pEl) pEl.textContent = `${pct}%`;
       if (rpLabel) rpLabel.textContent = `${done} / ${total} bài (${pct}%)`;
       if (rpBar) rpBar.style.width = `${pct}%`;
     }
 
     // -------------------------------------------------------------------------
-    // PAGE 1: LỘ TRÌNH HỌC TẬP & SPEED SCULPT TIMER
+    // PAGE 1: AI QUÉT LINK KHÓA HỌC / VIDEO & TẠO LỘ TRÌNH (TRỐNG MẶC ĐỊNH)
     // -------------------------------------------------------------------------
+    function fillQuickCoursePrompt(text) {
+      const inp = document.getElementById('aiCourseLinkOrTopic');
+      if (inp) inp.value = text;
+    }
+
     function renderCurriculumList() {
       const container = document.getElementById('curriculumContainer');
       const titleEl = document.getElementById('courseMainTitle');
-      if (titleEl) titleEl.textContent = studioState.courseTitle || 'Giáo Trình Điêu Khắc 3D ZBrush';
+      const advisorBox = document.getElementById('aiAdvisorSummaryBox');
+
+      if (studioState.aiStudyAdvice && advisorBox) {
+        advisorBox.classList.remove('hidden');
+        document.getElementById('aiAdvisorOverviewText').textContent = studioState.aiStudyAdvice.overview || '';
+        document.getElementById('aiAdvisorTipsList').innerHTML = (studioState.aiStudyAdvice.tips || []).map((tip, i) => `
+          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+            <div class="font-bold text-amber-400 mb-1">Gợi ý #${i + 1}</div>
+            <div class="text-slate-300 leading-relaxed">${tip}</div>
+          </div>
+        `).join('');
+      } else if (advisorBox) {
+        advisorBox.classList.add('hidden');
+      }
+
       if (!container) return;
+
+      if (!studioState.chapters || studioState.chapters.length === 0) {
+        if (titleEl) titleEl.textContent = 'Chưa có lộ trình — Hãy dán Link khóa học hoặc Chủ đề ở trên để AI tạo lộ trình';
+        container.innerHTML = `
+          <div class="bg-slate-950/90 border border-dashed border-slate-700 rounded-2xl p-8 text-center space-y-3">
+            <div class="w-14 h-14 rounded-2xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400 text-2xl mx-auto">
+              <i class="fa-solid fa-compass-drafting"></i>
+            </div>
+            <h4 class="text-base font-extrabold text-white">Lộ Trình Học Của Bạn Đang Trống</h4>
+            <p class="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
+              Không còn bị gò bó vào bất kỳ khóa học cố định nào! Bạn hãy dán <strong>Link khóa học bất kỳ (Udemy, YouTube, Coloso, Wingfox...)</strong> hoặc nhập <strong>Chủ đề bạn muốn học</strong> vào khung phía trên rồi bấm <strong>"AI Quét Link / Nội Dung & Tạo Lộ Trình Học Ngay"</strong>.
+            </p>
+          </div>
+        `;
+        updateHeaderMetrics();
+        return;
+      }
+
+      if (titleEl) titleEl.textContent = studioState.courseTitle || 'Lộ Trình Học Tập Cá Nhân Hóa';
 
       container.innerHTML = (studioState.chapters || []).map(chap => {
         const chapLessons = chap.lessons || [];
@@ -1447,14 +1794,18 @@
                   <div class="p-3 rounded-lg border ${isDone ? 'bg-emerald-950/20 border-emerald-500/30' : 'bg-slate-900/70 border-slate-800'} flex items-start justify-between gap-3">
                     <label class="flex items-start gap-2.5 cursor-pointer flex-1">
                       <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleLessonComplete('${lesson.id}')" class="mt-1 accent-emerald-400 w-4 h-4" />
-                      <div>
+                      <div class="space-y-1 flex-1">
                         <div class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'}">${lesson.title}</div>
-                        <div class="flex flex-wrap gap-1.5 mt-1">
-                          <span class="badge"><i class="fa-regular fa-calendar"></i> ${lesson.date || '2026-11-01'}</span>
+                        ${lesson.guide ? `<p class="text-[11px] text-slate-400 leading-relaxed">${lesson.guide}</p>` : ''}
+                        <div class="flex flex-wrap gap-1.5 pt-0.5">
+                          <span class="badge"><i class="fa-regular fa-calendar"></i> ${lesson.date || getTodayDateString()}</span>
                           ${(lesson.tools || []).map(t => `<span class="badge badge-cyan">${t}</span>`).join('')}
                         </div>
                       </div>
                     </label>
+                    <button class="text-slate-500 hover:text-rose-400 text-xs px-1" onclick="deleteSingleLesson('${chap.id}', '${lesson.id}')" title="Xóa bài này">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
                   </div>
                 `;
               }).join('')}
@@ -1467,13 +1818,64 @@
 
     function toggleLessonComplete(lessonId) {
       studioState.completedLessons[lessonId] = !studioState.completedLessons[lessonId];
-      if (studioState.completedLessons[lessonId]) addXP(25, 'Hoàn thành bài học ZBrush!');
+      if (studioState.completedLessons[lessonId]) addXP(25, 'Hoàn thành bài học!');
       else saveStudioState();
       renderCurriculumList();
     }
 
+    function deleteSingleLesson(chapId, lessonId) {
+      const chap = (studioState.chapters || []).find(c => c.id === chapId);
+      if (!chap) return;
+      chap.lessons = (chap.lessons || []).filter(l => l.id !== lessonId);
+      studioState.chapters = studioState.chapters.filter(c => c.lessons && c.lessons.length > 0);
+      saveStudioState();
+      renderCurriculumList();
+    }
+
+    function clearCurrentRoadmap() {
+      studioState.courseTitle = '';
+      studioState.chapters = [];
+      studioState.aiStudyAdvice = null;
+      studioState.completedLessons = {};
+      saveStudioState();
+      renderCurriculumList();
+      showToast('Đã xóa trắng lộ trình! Bạn có thể dán link hoặc chủ đề mới.');
+    }
+
+    function addManualLessonToRoadmap() {
+      const chapName = (document.getElementById('manualChapTitle').value || 'Chương 1: Thực Hành Điêu Khắc 3D').trim();
+      const lesName = (document.getElementById('manualLessonTitle').value || '').trim();
+      const toolsRaw = (document.getElementById('manualLessonTools').value || 'ZBrush, Move, ClayBuildup').trim();
+      if (!lesName) { showToast('Hãy nhập tên bài học!'); return; }
+
+      let chap = (studioState.chapters || []).find(c => c.title.toLowerCase() === chapName.toLowerCase());
+      if (!chap) {
+        chap = { id: 'chap_' + Date.now(), title: chapName, lessons: [] };
+        studioState.chapters.push(chap);
+      }
+      if (!studioState.courseTitle) studioState.courseTitle = 'Lộ Trình Học 3D Tự Thiết Kế';
+
+      chap.lessons.push({
+        id: 'les_' + Date.now(),
+        title: lesName,
+        date: getTodayDateString(),
+        tools: toolsRaw.split(',').map(s => s.trim()).filter(Boolean),
+        guide: 'Thực hành dựng khối, kiểm tra tỷ lệ ở 3 góc nhìn và lưu file dự phòng.'
+      });
+
+      document.getElementById('manualLessonTitle').value = '';
+      saveStudioState();
+      renderCurriculumList();
+      closeModal('manualLessonModal');
+      showToast('Đã thêm bài học vào lộ trình!');
+    }
+
     function applyScheduleSettings() {
-      const startStr = document.getElementById('scheduleStartDate').value || '2026-11-01';
+      if (!studioState.chapters || !studioState.chapters.length) {
+        showToast('Hãy tạo lộ trình trước khi dàn lại lịch học!');
+        return;
+      }
+      const startStr = document.getElementById('scheduleStartDate').value || getTodayDateString();
       const pace = parseInt(document.getElementById('schedulePaceSelect').value || '2', 10);
       studioState.startDate = startStr;
       studioState.paceDays = pace;
@@ -1490,38 +1892,206 @@
       });
       saveStudioState();
       renderCurriculumList();
-      showToast('Đã tự động dàn lại toàn bộ lịch học theo ngày bắt đầu mới!');
+      showToast('Đã tự động dàn lại lịch học theo ngày bắt đầu mới!');
     }
 
-    function loadCuongCGDefaultCourse() {
-      studioState.courseTitle = 'Khóa tự học 3D - Tự học ZBrush (GV: Cường CG - Udemy)';
-      studioState.chapters = buildDefaultCuongCGSyllabus(studioState.startDate || '2026-11-01', studioState.paceDays || 2);
-      saveStudioState();
-      renderCurriculumList();
-      showToast('Đã khôi phục trọn bộ 35 bài giảng khóa ZBrush Cường CG!');
-    }
+    // AI QUÉT LINK KHÓA HỌC / VIDEO BẤT KỲ & TẠO LỘ TRÌNH STEP-BY-STEP (GOOGLE SEARCH GROUNDING)
+    async function scanAndBuildRoadmapWithAI() {
+      const linkOrTopic = (document.getElementById('aiCourseLinkOrTopic').value || '').trim();
+      const extraContext = (document.getElementById('aiCourseExtraContext').value || '').trim();
+      const startStr = document.getElementById('scheduleStartDate').value || getTodayDateString();
+      const pace = parseInt(document.getElementById('schedulePaceSelect').value || '2', 10);
+      const targetCount = parseInt(document.getElementById('aiTargetLessonCount').value || '20', 10);
 
-    function appendAnimeSemiBridgeChapter() {
-      const exists = (studioState.chapters || []).some(c => c.id === 'chap_5_bridge');
-      if (exists) {
-        showToast('Chương 5 Chuyên đề Đầu Nữ & Retopo đã có sẵn trong lộ trình!');
+      if (!linkOrTopic && !extraContext) {
+        showToast('Vui lòng dán Link khóa học/video hoặc nhập Chủ đề bạn muốn học!');
         return;
       }
-      studioState.chapters.push({
-        id: 'chap_5_bridge',
-        title: 'Chương 5 (Bổ trợ): Chuyên Đề Đầu Nữ Stylized / Semi-Realistic & Maya Retopo (4 Bài)',
-        lessons: [
-          { id: 'c5_l36', title: 'Bài 36: Thiết lập Camera 85mm & Tỷ lệ vàng khuôn mặt nữ Á Đông (Đường E-Line)', date: '2026-12-26', tools: ['Angle Of View 85', 'Move', 'ClayBuildup'] },
-          { id: 'c5_l37', title: 'Bài 37: Điêu khắc Đôi Mắt Long Lanh, Bờ Mi Dày & Môi Mọng', date: '2026-12-28', tools: ['DamStandard', 'TrimDynamic', 'Pinch'] },
-          { id: 'c5_l38', title: 'Bài 38: Phân tầng mái tóc Stylized (Big – Medium – Small Clusters)', date: '2026-12-30', tools: ['CurveTubes', 'MoveTopological'] },
-          { id: 'c5_l39', title: 'Bài 39: Xuất .OBJ sang Maya Quad Draw & Kiểm tra trên Sketchfab 3D Viewer', date: '2027-01-02', tools: ['Quad Draw', 'Export .OBJ/.FBX'] }
-        ]
-      });
-      saveStudioState();
-      renderCurriculumList();
-      addXP(30, 'Đã bổ sung Chương 5 vào lộ trình!');
+
+      const btn = document.getElementById('aiScanCourseBtn');
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang Quét Nội Dung & Thiết Kế Lộ Trình...`;
+
+      const systemPrompt = `Bạn là Giám đốc Đào tạo 3D Character Art & ZBrush. Nhiệm vụ của bạn là quét đường link khóa học/video hoặc chủ đề mà học viên cung cấp, phân tích nội dung và trả về DUY NHẤT một chuỗi JSON hợp lệ (không bọc trong markdown code fence) theo đúng cấu trúc sau:
+{
+  "courseTitle": "Tên khóa học hoặc lộ trình",
+  "overview": "Nhận xét tổng quan 2-3 câu về nội dung khóa học/video này và định hướng trọng tâm",
+  "tips": ["Lời khuyên thực chiến số 1", "Lời khuyên thực chiến số 2", "Lời khuyên thực chiến số 3"],
+  "chapters": [
+    {
+      "title": "Chương 1: ...",
+      "lessons": [
+        {
+          "title": "Bài 1: ...",
+          "guide": "Hướng dẫn thực hành cụ thể 1-2 câu",
+          "tools": ["Công cụ 1", "Công cụ 2"]
+        }
+      ]
+    }
+  ]
+}`;
+
+      const userQuery = `Học viên muốn học theo link hoặc chủ đề: "${linkOrTopic}".
+Thông tin/Đề cương bổ sung từ học viên: "${extraContext || 'Không có'}".
+Hãy thiết kế lộ trình khoảng ${targetCount} bài học chia thành các chương rõ ràng, sát thực tế nhất với nội dung trên. Chỉ trả về JSON hợp lệ.`;
+
+      try {
+        const rawReply = await callGeminiAPI({
+          contents: [{ parts: [{ text: userQuery }] }],
+          tools: [{ "google_search": {} }],
+          systemInstruction: { parts: [{ text: systemPrompt }] }
+        });
+
+        const cleanedJson = rawReply.replace(/```json/gi, '').replace(/```/g, '').trim();
+        const firstBrace = cleanedJson.indexOf('{');
+        const lastBrace = cleanedJson.lastIndexOf('}');
+        const parsed = JSON.parse(cleanedJson.substring(firstBrace, lastBrace + 1));
+
+        const baseDate = new Date(startStr + 'T00:00:00');
+        let globalIdx = 0;
+
+        const formattedChapters = (parsed.chapters || []).map((chap, cIdx) => ({
+          id: 'ai_chap_' + Date.now() + '_' + cIdx,
+          title: chap.title || `Chương ${cIdx + 1}`,
+          lessons: (chap.lessons || []).map((les, lIdx) => {
+            const d = new Date(baseDate);
+            d.setDate(d.getDate() + globalIdx * pace);
+            globalIdx++;
+            return {
+              id: 'ai_les_' + Date.now() + '_' + cIdx + '_' + lIdx,
+              title: les.title || `Bài ${globalIdx}`,
+              guide: les.guide || 'Thực hành theo bài giảng và kiểm tra tỷ lệ khối ở góc 45 độ.',
+              date: d.toISOString().split('T')[0],
+              tools: Array.isArray(les.tools) && les.tools.length ? les.tools : ['ZBrush Sculpting', 'Silhouette Check']
+            };
+          })
+        }));
+
+        studioState.courseTitle = parsed.courseTitle || linkOrTopic;
+        studioState.startDate = startStr;
+        studioState.paceDays = pace;
+        studioState.chapters = formattedChapters;
+        studioState.completedLessons = {};
+        studioState.aiStudyAdvice = {
+          overview: parsed.overview || `Lộ trình học được thiết kế tự động từ "${linkOrTopic}".`,
+          tips: parsed.tips || [
+            'Luôn dựng khối Primary Forms ở mật độ lưới thấp trước khi lên chi tiết.',
+            'Xoay kiểm tra nhân vật ở góc nghiêng 45° và 90° liên tục.',
+            'Sử dụng Speed Sculpt Timer để rèn tốc độ bắt tỷ lệ.'
+          ]
+        };
+
+        saveStudioState();
+        renderCurriculumList();
+        addXP(40, 'AI đã quét nội dung và lên lộ trình học thành công!');
+      } catch (err) {
+        console.warn('Fallback inteligente khi chưa có kết nối API hoặc lỗi mạng:', err);
+        // Nếu người dùng trên GitHub Pages chưa gắn API Key hoặc link chỉ là văn bản thô, tự động phân tích văn bản thông minh để không bao giờ bị kẹt!
+        buildSmartFallbackRoadmap(linkOrTopic, extraContext, startStr, pace, targetCount);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
     }
 
+    function buildSmartFallbackRoadmap(linkOrTopic, extraContext, startStr, pace, targetCount) {
+      const baseDate = new Date(startStr + 'T00:00:00');
+      const rawLines = extraContext
+        ? extraContext.split(/\r?\n/).map(s => s.trim()).filter(Boolean)
+        : [];
+
+      let generatedLessons = [];
+      if (rawLines.length >= 3) {
+        generatedLessons = rawLines.map((line, idx) => ({
+          title: line.startsWith('Bài') ? line : `Bài ${idx + 1}: ${line}`,
+          guide: `Thực hành trọng tâm theo nội dung: ${line}. Kiểm tra khối bằng MatCap Grey Clay.`,
+          tools: ['ZBrush', 'Move', 'ClayBuildup', 'Camera 85mm']
+        }));
+      } else {
+        const stages = [
+          { name: 'Giai đoạn 1: Làm Quen Công Cụ & Dựng Khối Primary Forms', tools: ['DynaMesh', 'Move Brush', 'Camera 85mm'] },
+          { name: 'Giai đoạn 2: Giải Phẫu Tỷ Lệ & Phân Mảng Secondary Forms', tools: ['ClayBuildup', 'TrimDynamic', 'DamStandard'] },
+          { name: 'Giai đoạn 3: Phụ Kiện, Tóc, Quần Áo & Tối Ưu Lưới ZRemesher', tools: ['ZRemesher', 'CurveTubes', 'Extract'] },
+          { name: 'Giai đoạn 4: Chi Tiết Bề Mặt, Tạo Dáng (Pose) & Render Xuất File', tools: ['Transpose Master', 'Decimation Master', 'BPR Render'] }
+        ];
+        for (let i = 0; i < targetCount; i++) {
+          const st = stages[Math.min(stages.length - 1, Math.floor((i / targetCount) * stages.length))];
+          generatedLessons.push({
+            title: `Bài ${i + 1}: Thực hành "${linkOrTopic}" — Phần ${i + 1}`,
+            guide: `Thuộc ${st.name}. Hoàn thành bài tập thực hành và chụp 3 góc nhìn để kiểm tra Silhouette.`,
+            tools: st.tools
+          });
+        }
+      }
+
+      const chunkSize = Math.max(4, Math.ceil(generatedLessons.length / 4));
+      const newChapters = [];
+      let globalIdx = 0;
+
+      for (let i = 0; i < generatedLessons.length; i += chunkSize) {
+        const chunk = generatedLessons.slice(i, i + chunkSize).map(item => {
+          const d = new Date(baseDate);
+          d.setDate(d.getDate() + globalIdx * pace);
+          globalIdx++;
+          return {
+            id: 'les_fb_' + Date.now() + '_' + globalIdx,
+            title: item.title,
+            guide: item.guide,
+            date: d.toISOString().split('T')[0],
+            tools: item.tools
+          };
+        });
+        const chapNum = newChapters.length + 1;
+        newChapters.push({
+          id: 'chap_fb_' + Date.now() + '_' + chapNum,
+          title: `Chương ${chapNum}: Lộ Trình Thực Hành Giai Đoạn ${chapNum} (${chunk.length} Bài)`,
+          lessons: chunk
+        });
+      }
+
+      studioState.courseTitle = linkOrTopic || 'Lộ Trình Học 3D Cá Nhân Hóa';
+      studioState.startDate = startStr;
+      studioState.paceDays = pace;
+      studioState.chapters = newChapters;
+      studioState.completedLessons = {};
+      studioState.aiStudyAdvice = {
+        overview: `Đã khởi tạo lộ trình ${globalIdx} bài học cho mục tiêu: "${linkOrTopic}". (Mẹo: Bấm nút "Gắn Google API Key" trên thanh Header để kích hoạt Gemini AI quét trực tiếp dữ liệu web theo thời gian thực!)`,
+        tips: [
+          'Dành 15 phút đầu mỗi buổi tập dựng nhanh khối tổng thể (Blockout) với lưới thấp.',
+          'Sử dụng trang Sketchfab 3D Viewer (Trang 2) để soi lỗi Silhouette mô hình của bạn.',
+          'Mở Pinterest 3D Ref Wall (Trang 4) để luôn có ít nhất 3 ảnh tham chiếu trước mặt khi nặn.'
+        ]
+      };
+      saveStudioState();
+      renderCurriculumList();
+      showToast('Đã tạo lộ trình học tập mới thành công!');
+    }
+
+    async function askQuickAIMentor() {
+      const q = (document.getElementById('quickMentorQuestion').value || '').trim();
+      if (!q) { showToast('Hãy nhập câu hỏi của bạn cho AI Mentor!'); return; }
+      const btn = document.getElementById('askMentorBtn');
+      const box = document.getElementById('quickMentorAnswerBox');
+      btn.disabled = true;
+      box.innerHTML = `<span class="text-sky-400"><i class="fa-solid fa-spinner fa-spin"></i> AI Mentor đang phân tích câu hỏi...</span>`;
+
+      try {
+        const reply = await callGeminiAPI({
+          contents: [{ parts: [{ text: q }] }],
+          systemInstruction: {
+            parts: [{ text: 'Bạn là giảng viên điêu khắc 3D ZBrush, Maya và Giải phẫu học nhân vật. Hãy trả lời ngắn gọn, súc tích, dễ hiểu bằng tiếng Việt, chỉ rõ phím tắt hoặc tên cọ ZBrush cần dùng.' }]
+          }
+        });
+        box.innerHTML = `<div class="space-y-1.5 text-slate-200">${reply.replace(/\n/g, '<br/>')}</div>`;
+      } catch (e) {
+        box.innerHTML = `<div class="text-amber-300"><strong>Gợi ý nhanh từ Studio Hub:</strong> Với vấn đề <em>"${q}"</em>, hãy kiểm tra mật độ lưới (Resolution) của DynaMesh hoặc bật <code>Brush &gt; Auto Masking &gt; BackfaceMask</code> / <code>MoveTopological</code> để các phần lưới mỏng hoặc gần nhau không bị dính chùm. (Hãy gắn Google Gemini API Key ở thanh Header để chat trực tiếp với AI không giới hạn!)</div>`;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // SPEED SCULPT TIMER
     let sculptTimerSec = 45 * 60;
     let sculptTimerHandle = null;
 
@@ -1564,48 +2134,6 @@
       updateTimerDisplay();
       document.getElementById('timerToggleBtn').innerHTML = `<i class="fa-solid fa-play"></i> Bắt đầu`;
       addXP(30, 'Hoàn thành phiên luyện tập Speed Sculpt!');
-    }
-
-    function generateCustomSyllabusWithAI() {
-      const titleInput = (document.getElementById('customCourseTitleInput').value || '').trim();
-      const rawText = (document.getElementById('customSyllabusRawText').value || '').trim();
-      if (!rawText) {
-        showToast('Vui lòng dán nội dung đề cương hoặc danh sách bài học vào ô trống!');
-        return;
-      }
-      const lines = rawText.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-      const startStr = document.getElementById('scheduleStartDate')?.value || studioState.startDate || '2026-11-01';
-      const pace = parseInt(document.getElementById('schedulePaceSelect')?.value || studioState.paceDays || '2', 10);
-      const baseDate = new Date(startStr + 'T00:00:00');
-
-      const lessons = lines.map((line, idx) => {
-        const d = new Date(baseDate);
-        d.setDate(d.getDate() + idx * pace);
-        return {
-          id: 'custom_l_' + Date.now() + '_' + idx,
-          title: line.startsWith('Bài') ? line : `Bài ${idx + 1}: ${line}`,
-          date: d.toISOString().split('T')[0],
-          tools: ['ZBrush Sculpting', 'Camera 85mm', 'Silhouette Check']
-        };
-      });
-
-      const chunkSize = Math.max(4, Math.ceil(lessons.length / 3));
-      const newChapters = [];
-      for (let i = 0; i < lessons.length; i += chunkSize) {
-        const chunk = lessons.slice(i, i + chunkSize);
-        const chapNum = newChapters.length + 1;
-        newChapters.push({
-          id: 'custom_chap_' + Date.now() + '_' + chapNum,
-          title: `Chương ${chapNum}: Giai đoạn Thực Hành #${chapNum} (${chunk.length} Bài)`,
-          lessons: chunk
-        });
-      }
-
-      studioState.courseTitle = titleInput || 'Giáo Trình 3D Cá Nhân Hóa (AI Generated)';
-      studioState.chapters = newChapters;
-      saveStudioState();
-      renderCurriculumList();
-      addXP(40, 'Đã tạo lộ trình học tập mới thành công!');
     }
 
     // -------------------------------------------------------------------------
@@ -1950,7 +2478,7 @@
     }
 
     // -------------------------------------------------------------------------
-    // PAGE 3: KHO VIDEO & BÀI VIẾT (TÍCH HỢP CUỘN VÔ TẬN - INFINITE SCROLL)
+    // PAGE 3: KHO VIDEO & BÀI VIẾT (CUỘN VÔ TẬN - INFINITE SCROLL)
     // -------------------------------------------------------------------------
     let activeVideoCategory = 'All';
     let visibleVideoCount = 9;
@@ -1993,7 +2521,7 @@
 
       document.getElementById('vidCountBadge').textContent = studioState.videos.length;
       const statusEl = document.getElementById('videoShowingStatus');
-      if (statusEl) statusEl.textContent = `Đang hiển thị ${slice.length} / ${filtered.length} video (Cuộn xuống để nạp thêm)`;
+      if (statusEl) statusEl.textContent = `Đang hiển thị ${slice.length} / ${filtered.length} video`;
 
       grid.innerHTML = slice.map(v => {
         const thumb = `https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`;
@@ -2030,12 +2558,11 @@
     function loadMoreVideosBatch() {
       const filtered = getFilteredVideos();
       if (visibleVideoCount >= filtered.length) {
-        // Tự động nhân bản kho chuyên đề nâng cao để người dùng kéo tới đâu hiện tới đó không bị cạn
         const base = buildDefaultVideos();
         videoBatchCycle++;
         const extra = base.slice(0, 6).map((item, i) => Object.assign({}, item, {
           id: 'v_auto_' + Date.now() + '_' + i,
-          title: `${item.title} (Buổi Luyện Tập #${videoBatchCycle})`
+          title: `${item.title} (Chuyên đề #${videoBatchCycle})`
         }));
         studioState.videos.push(...extra);
       }
@@ -2132,33 +2659,56 @@
       addXP(20, 'Đã thêm Video mới vào thư viện!');
     }
 
-    function generateNewArticleWithAI() {
+    async function generateNewArticleWithAI() {
       const topic = (document.getElementById('newVidTitle').value || 'Kỹ thuật điêu khắc 3D chuyên sâu').trim();
       const cat = document.getElementById('newVidCat').value;
-      studioState.articles.unshift({
-        id: 'art_' + Date.now(),
-        category: cat,
-        readTime: '6 phút đọc',
-        title: topic,
-        summary: `Phân tích chuyên sâu quy trình xử lý ${topic} trong ZBrush theo chuẩn Studio.`,
-        bannerUrl: 'https://i.ytimg.com/vi/wSKsmyV9ISk/hqdefault.jpg',
-        paragraphs: [
-          `1. Khởi tạo Primary Forms cho "${topic}": Luôn giữ mật độ lưới DynaMesh thấp (32-64) và kiểm tra bóng đổ Silhouette ở góc xoay 45 độ với Camera tiêu cự 85mm.`,
-          `2. Xử lý Secondary Forms: Sử dụng bộ cọ ClayBuildup, TrimDynamic và DamStandard để tách rõ các diện phẳng bắt sáng (Planes) và độ dày cấu trúc.`,
-          `3. Kiểm tra đối xứng & hoàn thiện: Xoay mô hình từ góc dưới cằm lên (Bottom View) để đảm bảo khối không bị bẹt trước khi chuyển sang ZRemesher.`
-        ]
-      });
-      saveStudioState();
-      renderArticlesHub();
-      closeModal('addVideoArticleModal');
-      addXP(30, 'AI đã biên soạn bài viết chuyên sâu mới!');
+      const btn = document.getElementById('aiWriteArtBtn');
+      btn.disabled = true;
+      btn.textContent = 'AI Đang Viết...';
+
+      try {
+        const reply = await callGeminiAPI({
+          contents: [{ parts: [{ text: `Viết một bài hướng dẫn kỹ thuật điêu khắc ZBrush ngắn gọn chia làm 3 đoạn rõ ràng về chủ đề: "${topic}".` }] }]
+        });
+        const paras = reply.split(/\n\n+/).map(s => s.trim()).filter(Boolean);
+        studioState.articles.unshift({
+          id: 'art_' + Date.now(),
+          category: cat,
+          readTime: '6 phút đọc',
+          title: topic,
+          summary: paras[0]?.slice(0, 120) + '...' || `Phân tích chuyên sâu quy trình xử lý ${topic} trong ZBrush.`,
+          bannerUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80',
+          paragraphs: paras.length ? paras : [reply]
+        });
+      } catch (e) {
+        studioState.articles.unshift({
+          id: 'art_' + Date.now(),
+          category: cat,
+          readTime: '6 phút đọc',
+          title: topic,
+          summary: `Phân tích chuyên sâu quy trình xử lý ${topic} trong ZBrush theo chuẩn Studio.`,
+          bannerUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80',
+          paragraphs: [
+            `1. Khởi tạo Primary Forms cho "${topic}": Luôn giữ mật độ lưới DynaMesh thấp (32-64) và kiểm tra bóng đổ Silhouette ở góc xoay 45 độ với Camera tiêu cự 85mm.`,
+            `2. Xử lý Secondary Forms: Sử dụng bộ cọ ClayBuildup, TrimDynamic và DamStandard để tách rõ các diện phẳng bắt sáng (Planes) và độ dày cấu trúc.`,
+            `3. Kiểm tra đối xứng & hoàn thiện: Xoay mô hình từ góc dưới cằm lên (Bottom View) để đảm bảo khối không bị bẹt trước khi chuyển sang ZRemesher.`
+          ]
+        });
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'AI Viết Bài Chuyên Sâu';
+        saveStudioState();
+        renderArticlesHub();
+        closeModal('addVideoArticleModal');
+        addXP(30, 'AI đã biên soạn bài viết chuyên sâu mới!');
+      }
     }
 
     // -------------------------------------------------------------------------
-    // PAGE 4: ARTSTATION & PINTEREST 3D SCULPT SHOWCASE (CUỘN VÔ TẬN)
+    // PAGE 4: PINTEREST & ARTSTATION 3D CHARACTER REF WALL (MASONRY + SIMILAR PINS)
     // -------------------------------------------------------------------------
     let activeRefCat = 'All';
-    let visibleRefCount = 9;
+    let visibleRefCount = 12;
     let refPoolCursor = 0;
     let currentLightboxRef = null;
     let refFlipState = false, refZoomState = false;
@@ -2167,15 +2717,16 @@
     function getFilteredRefs() {
       const q = (document.getElementById('refSearchInput')?.value || '').toLowerCase().trim();
       return (studioState.refs || []).filter(r => {
-        if (activeRefCat === 'Saved Ref ⭐' && !r.saved) return false;
-        if (activeRefCat !== 'All' && activeRefCat !== 'Saved Ref ⭐' && r.category !== activeRefCat) return false;
+        if (activeRefCat === 'Saved Pins 📌' && !r.saved) return false;
+        if (activeRefCat !== 'All' && activeRefCat !== 'Saved Pins 📌' && r.category !== activeRefCat) return false;
         if (!q) return true;
-        return r.title.toLowerCase().includes(q) || r.artist.toLowerCase().includes(q) || (r.software || []).join(' ').toLowerCase().includes(q);
+        const hay = `${r.title} ${r.artist} ${r.category} ${(r.tags || []).join(' ')} ${(r.software || []).join(' ')}`.toLowerCase();
+        return hay.includes(q);
       });
     }
 
     function resetAndRenderRefBoard() {
-      visibleRefCount = 9;
+      visibleRefCount = 12;
       renderRefBoard();
     }
 
@@ -2184,7 +2735,11 @@
       const grid = document.getElementById('refBoardGridContainer');
       if (!filterBar || !grid) return;
 
-      const cats = ['All', 'Saved Ref ⭐', 'Anime & Stylized', 'Realism / AAA', 'Anatomy / Bust', 'Hard-Surface / Mecha', 'Hair & Cloth'];
+      const cats = [
+        'All', 'Saved Pins 📌', 'Female Bust & Portrait',
+        'Anime & Stylized', 'Anatomy & Ecorche',
+        'Armor & Hard-Surface', 'Hair & Drapery', 'Creature & Fantasy'
+      ];
       filterBar.innerHTML = cats.map(c => `
         <button class="style-tag ${activeRefCat === c ? 'selected' : ''}" onclick="setRefCategoryFilter('${c}')">${c}</button>
       `).join('');
@@ -2193,44 +2748,36 @@
       const slice = filtered.slice(0, visibleRefCount);
 
       grid.innerHTML = slice.map(r => `
-        <div class="art-card">
-          <div>
-            <div class="art-thumb" onclick="openRefLightbox('${r.id}')">
-              <img src="${r.beautyImg}" alt="${r.title}" loading="lazy" />
-              <span class="badge badge-cyan absolute top-2.5 left-2.5">${r.category}</span>
-              <div class="absolute bottom-2.5 left-2.5 flex gap-1">
-                <span class="badge bg-black/85 text-sky-400"><i class="fa-brands fa-artstation"></i> ArtStation</span>
-                <span class="badge bg-black/85 text-rose-400"><i class="fa-brands fa-pinterest"></i> Pin</span>
+        <div class="pin-card">
+          <div class="pin-img-wrap" onclick="openRefLightbox('${r.id}')">
+            <img src="${r.beautyImg}" alt="${r.title}" loading="lazy" />
+            <!-- Pinterest Hover Overlay -->
+            <div class="pin-hover-overlay">
+              <div class="flex items-center justify-between gap-2">
+                <span class="badge badge-cyan">${r.category}</span>
+                <button class="btn ${r.saved ? 'btn-pinterest' : 'bg-black/80 text-white'} text-xs py-1 px-2.5 rounded-full" onclick="toggleSaveRefItem('${r.id}', event)">
+                  <i class="fa-solid fa-thumbtack"></i> ${r.saved ? 'Đã Ghim' : 'Ghim Pin'}
+                </button>
               </div>
-            </div>
-            <div class="p-4">
-              <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                <span class="truncate max-w-[200px]"><i class="fa-solid fa-user-astronaut text-sky-400 mr-1"></i> ${r.artist}</span>
-                <span><i class="fa-solid fa-heart text-rose-500"></i> ${r.likes || '4.2K'}</span>
-              </div>
-              <h4 class="text-sm font-extrabold text-white mb-2 cursor-pointer hover:text-sky-400" onclick="openRefLightbox('${r.id}')">${r.title}</h4>
-              <p class="text-xs text-slate-400 line-clamp-2 mb-3">${r.breakdown}</p>
-              <div class="flex flex-wrap gap-1">
-                ${(r.software || ['ZBrush']).map(s => `<span class="badge">${s}</span>`).join('')}
+              <div class="flex items-center justify-between gap-1.5">
+                <a href="${r.artstationUrl || 'https://www.artstation.com/search?q=3d+character+sculpt'}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="btn bg-black/85 hover:bg-sky-600 text-white text-[11px] py-1.5 px-2.5 flex-1">
+                  <i class="fa-brands fa-artstation text-sky-400"></i> Nguồn ArtStation
+                </a>
+                <a href="${r.pinterestUrl || 'https://www.pinterest.com/search/pins/?q=3d+character+sculpt'}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="btn bg-black/85 hover:bg-rose-600 text-white text-[11px] py-1.5 px-2.5 flex-1">
+                  <i class="fa-brands fa-pinterest text-rose-400"></i> Tương Tự
+                </a>
               </div>
             </div>
           </div>
-          <div class="px-4 pb-4 flex flex-col gap-2">
-            <div class="flex gap-1.5">
-              <button class="btn btn-sketchfab flex-1 text-xs" onclick="openRefLightbox('${r.id}')">
-                <i class="fa-solid fa-eye"></i> Soi Khối & Timelapse
-              </button>
-              <button class="btn text-xs ${r.saved ? 'text-amber-400 border-amber-400' : ''}" onclick="toggleSaveRefItem('${r.id}', event)" title="Lưu vào bảng Reference">
-                <i class="fa-solid fa-bookmark"></i>
-              </button>
+
+          <div class="p-3.5 space-y-2">
+            <h4 class="text-xs font-extrabold text-white leading-snug cursor-pointer hover:text-sky-400" onclick="openRefLightbox('${r.id}')">${r.title}</h4>
+            <div class="flex items-center justify-between text-[11px] text-slate-400">
+              <span class="truncate max-w-[175px]"><i class="fa-solid fa-user-pen text-sky-400 mr-1"></i> ${r.artist}</span>
+              <span><i class="fa-solid fa-heart text-rose-500"></i> ${r.likes || '9.2K'}</span>
             </div>
-            <div class="grid grid-cols-2 gap-1.5">
-              <a href="${r.artstationUrl || 'https://www.artstation.com/search?q=zbrush+sculpt'}" target="_blank" rel="noopener noreferrer" class="btn text-[11px] py-1.5">
-                <i class="fa-brands fa-artstation text-sky-400"></i> ArtStation
-              </a>
-              <a href="${r.pinterestUrl || 'https://www.pinterest.com/search/pins/?q=zbrush+character+sculpt'}" target="_blank" rel="noopener noreferrer" class="btn text-[11px] py-1.5">
-                <i class="fa-brands fa-pinterest text-rose-500"></i> Pinterest
-              </a>
+            <div class="flex flex-wrap gap-1">
+              ${(r.tags || ['#3DCharacter', '#ZBrush']).slice(0, 3).map(t => `<span class="badge text-[10px]">${t}</span>`).join('')}
             </div>
           </div>
         </div>
@@ -2240,32 +2787,120 @@
     function loadMoreRefsBatch() {
       const filtered = getFilteredRefs();
       if (visibleRefCount >= filtered.length) {
-        // Nạp thêm tác phẩm mới từ EXTRA_REF_POOL để cuộn tới đâu hiện tới đó
-        for (let i = 0; i < 4; i++) {
-          const tpl = EXTRA_REF_POOL[refPoolCursor % EXTRA_REF_POOL.length];
+        for (let i = 0; i < 6; i++) {
+          const tpl = EXTRA_PINTEREST_POOL[refPoolCursor % EXTRA_PINTEREST_POOL.length];
           refPoolCursor++;
           studioState.refs.push({
-            id: 'ref_auto_' + Date.now() + '_' + refPoolCursor,
-            title: `${tpl.title} #${refPoolCursor}`,
+            id: 'pin_auto_' + Date.now() + '_' + refPoolCursor,
+            title: `${tpl.title} (Pin #${refPoolCursor})`,
             artist: tpl.artist,
             category: tpl.category,
             software: ['ZBrush', 'Marmoset Toolbag'],
-            likes: (3.1 + (refPoolCursor % 7)).toFixed(1) + 'K',
+            likes: (8.4 + (refPoolCursor % 11)).toFixed(1) + 'K',
             saved: false,
-            videoId: tpl.videoId,
-            beautyImg: `https://i.ytimg.com/vi/${tpl.videoId}/hqdefault.jpg`,
+            beautyImg: tpl.img,
             artstationUrl: `https://www.artstation.com/search?sort_by=relevance&query=${tpl.q}`,
             pinterestUrl: `https://www.pinterest.com/search/pins/?q=${tpl.q}`,
-            breakdown: 'Phân tích tỷ lệ khối Primary/Secondary, đường bóng đổ Silhouette và cách đặt Rim Light tách nền chuẩn ArtStation.'
+            tags: tpl.tags || ['#3DCharacter', '#ZBrush'],
+            breakdown: 'Phân tích tỷ lệ khối Primary/Secondary, đường bóng đổ Silhouette và cách đặt Rim Light tách nền chuẩn ArtStation / Pinterest.'
           });
         }
       }
-      visibleRefCount += 6;
+      visibleRefCount += 8;
       renderRefBoard();
     }
 
+    // Tạo nhanh Pin mới dựa trên từ khóa người dùng đang gõ vào thanh tìm kiếm Pinterest
+    function createSearchPinFromQuery() {
+      const qRaw = (document.getElementById('refSearchInput')?.value || '').trim();
+      if (!qRaw) {
+        showToast('Hãy gõ từ khóa sản phẩm 3D bạn muốn tìm vào ô tìm kiếm trước!');
+        return;
+      }
+      const encoded = encodeURIComponent(qRaw + ' 3d character sculpt zbrush');
+      const sampleImgs = [
+        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=900&q=80'
+      ];
+      const newPin = {
+        id: 'pin_search_' + Date.now(),
+        title: `Bộ Sưu Tập Ref 3D: "${qRaw}"`,
+        artist: 'ArtStation & Pinterest Discovery',
+        category: activeRefCat !== 'All' && activeRefCat !== 'Saved Pins 📌' ? activeRefCat : 'Anime & Stylized',
+        software: ['ZBrush', '3D Reference'],
+        likes: 'New Pin',
+        saved: true,
+        beautyImg: sampleImgs[studioState.refs.length % sampleImgs.length],
+        artstationUrl: `https://www.artstation.com/search?sort_by=relevance&query=${encoded}`,
+        pinterestUrl: `https://www.pinterest.com/search/pins/?q=${encoded}`,
+        tags: ['#' + qRaw.replace(/\s+/g, ''), '#ArtStationRef', '#PinterestPin'],
+        breakdown: `Nhấn nút "Xem Sản Phẩm Trên ArtStation" hoặc "Xem & Tìm Ảnh Tương Tự Trên Pinterest" để mở toàn bộ kho ảnh sản phẩm 3D thực tế cho từ khóa "${qRaw}".`
+      };
+      studioState.refs.unshift(newPin);
+      saveStudioState();
+      renderRefBoard();
+      openRefLightbox(newPin.id);
+      showToast(`Đã ghim chủ đề "${qRaw}" kèm link dẫn thẳng tới nguồn ArtStation & Pinterest!`);
+    }
+
+    // Dùng AI (gemini-3.1-flash-lite-image) tạo ảnh 3D Character Reference Pin trực tiếp lên tường Pinterest
+    async function generateNew3DRefPinWithAI() {
+      const qRaw = (document.getElementById('refSearchInput')?.value || 'stylized female bust zbrush clay sculpture').trim();
+      const btn = document.getElementById('aiGenRefPinBtn');
+      const origHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI Đang Render Ảnh Ref 3D...`;
+
+      const apiKey = getSavedApiKey();
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-image:generateContent?key=${apiKey}`;
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: `High quality 3D ZBrush character sculpture render on ArtStation, studio rim lighting, detailed clay and shader presentation of: ${qRaw}` }]
+            }],
+            generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
+          })
+        });
+        const data = await res.json();
+        const base64Data = data?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+        if (!base64Data) throw new Error('No image returned');
+
+        const imgUrl = `data:image/png;base64,${base64Data}`;
+        const enc = encodeURIComponent(qRaw);
+        const newPin = {
+          id: 'pin_ai_' + Date.now(),
+          title: `AI 3D Concept Sculpt: ${qRaw}`,
+          artist: 'Gemini 3D Concept Generator',
+          category: 'Anime & Stylized',
+          software: ['ZBrush', 'AI Concept Ref'],
+          likes: 'AI Pin',
+          saved: true,
+          beautyImg: imgUrl,
+          artstationUrl: `https://www.artstation.com/search?sort_by=relevance&query=${enc}`,
+          pinterestUrl: `https://www.pinterest.com/search/pins/?q=${enc}`,
+          tags: ['#AI3DRef', '#ZBrushConcept', '#CharacterSculpt'],
+          breakdown: `Ảnh Reference 3D được tạo theo từ khóa "${qRaw}". Bấm vào liên kết bên phải để tìm các tác phẩm 3D tương tự trên ArtStation và Pinterest.`
+        };
+        studioState.refs.unshift(newPin);
+        saveStudioState();
+        renderRefBoard();
+        openRefLightbox(newPin.id);
+        addXP(25, 'Đã tạo ảnh 3D Reference mới bằng AI!');
+      } catch (e) {
+        createSearchPinFromQuery();
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = origHtml;
+      }
+    }
+
     function openExternalSearch(platform) {
-      const q = encodeURIComponent((document.getElementById('refSearchInput')?.value || 'zbrush character sculpt').trim());
+      const q = encodeURIComponent((document.getElementById('refSearchInput')?.value || '3d character sculpt zbrush').trim());
       const url = platform === 'artstation'
         ? `https://www.artstation.com/search?sort_by=relevance&query=${q}`
         : `https://www.pinterest.com/search/pins/?q=${q}`;
@@ -2274,7 +2909,7 @@
 
     function setRefCategoryFilter(cat) {
       activeRefCat = cat;
-      visibleRefCount = 9;
+      visibleRefCount = 12;
       renderRefBoard();
     }
 
@@ -2285,7 +2920,7 @@
       item.saved = !item.saved;
       saveStudioState();
       renderRefBoard();
-      showToast(item.saved ? 'Đã lưu tác phẩm vào bảng Reference cá nhân!' : 'Đã bỏ lưu Reference.');
+      showToast(item.saved ? 'Đã ghim vào Saved Pins 📌!' : 'Đã bỏ ghim Pin.');
     }
 
     function openRefLightbox(refId) {
@@ -2294,43 +2929,50 @@
       currentLightboxRef = r;
       refFlipState = false;
       refZoomState = false;
-      document.getElementById('refLbSoftware').textContent = (r.software || ['ZBrush']).join(' • ');
+      document.getElementById('refLbSoftware').textContent = (r.software || ['ZBrush', '3D Character']).join(' • ');
       document.getElementById('refLbTitle').textContent = r.title;
       document.getElementById('refLbArtist').textContent = r.artist;
       document.getElementById('refLbBreakdown').textContent = r.breakdown;
       document.getElementById('refLbArtStationLink').href = r.artstationUrl || 'https://www.artstation.com';
       document.getElementById('refLbPinterestLink').href = r.pinterestUrl || 'https://www.pinterest.com';
+      document.getElementById('refLbTagsBox').innerHTML = (r.tags || ['#3DCharacter', '#ZBrush']).map(t => `<span class="badge badge-cyan">${t}</span>`).join('');
+
       switchRefModalChannel('beauty');
+
+      // Render 4 Similar Pins right below inside the modal (like Pinterest!)
+      const similar = (studioState.refs || [])
+        .filter(x => x.id !== r.id && (x.category === r.category || true))
+        .sort((a, b) => (a.category === r.category ? -1 : 1))
+        .slice(0, 4);
+
+      const simGrid = document.getElementById('refSimilarPinsGrid');
+      if (simGrid) {
+        simGrid.innerHTML = similar.map(s => `
+          <div class="bg-slate-950 border border-slate-800 hover:border-sky-400 rounded-xl overflow-hidden cursor-pointer transition-all" onclick="openRefLightbox('${s.id}')">
+            <img src="${s.beautyImg}" alt="${s.title}" class="w-full h-32 object-cover" />
+            <div class="p-2.5">
+              <div class="text-[10px] text-sky-400 font-bold truncate">${s.category}</div>
+              <div class="text-xs font-bold text-white line-clamp-1">${s.title}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
       openModal('refLightboxModal');
     }
 
     function closeRefLightboxModal() {
-      document.getElementById('refLbVideoStage').innerHTML = '';
       closeModal('refLightboxModal');
     }
 
     function switchRefModalChannel(ch) {
       if (!currentLightboxRef) return;
-      ['Beauty', 'Clay', 'Wire', 'Video'].forEach(k => {
+      ['Beauty', 'Clay', 'Wire'].forEach(k => {
         const b = document.getElementById('refBtn' + k);
         if (b) b.classList.toggle('btn-sketchfab', ch === k.toLowerCase());
       });
 
-      const imgStage = document.getElementById('refLbImageStage');
-      const vidStage = document.getElementById('refLbVideoStage');
       const img = document.getElementById('refLbImage');
-
-      if (ch === 'video') {
-        imgStage.classList.add('hidden');
-        vidStage.classList.remove('hidden');
-        const vidId = currentLightboxRef.videoId || 'I14uAJ063DY';
-        vidStage.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vidId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        return;
-      }
-
-      vidStage.innerHTML = '';
-      vidStage.classList.add('hidden');
-      imgStage.classList.remove('hidden');
       img.src = currentLightboxRef.beautyImg;
       img.classList.remove('filter-beauty', 'filter-clay', 'filter-wire');
       img.classList.add('filter-' + ch);
@@ -2364,37 +3006,37 @@
     }
 
     function saveNewRefBoardItem() {
-      const title = (document.getElementById('newRefTitle').value || 'Custom 3D Sculpt Reference').trim();
+      const title = (document.getElementById('newRefTitle').value || 'Custom 3D Character Reference').trim();
       const artist = (document.getElementById('newRefArtist').value || 'ArtStation / Pinterest Artist').trim();
       const cat = document.getElementById('newRefCategory').value;
       const urlInput = (document.getElementById('newRefUrlInput').value || '').trim();
       const sourceLink = (document.getElementById('newRefSourceLink').value || '').trim();
       const breakdown = (document.getElementById('newRefBreakdown').value || 'Tham khảo tỷ lệ khối Primary/Secondary và cách xử lý ánh sáng Rim Light.').trim();
 
-      const img = tempUploadedRefImg || urlInput || 'https://i.ytimg.com/vi/I14uAJ063DY/hqdefault.jpg';
+      const img = tempUploadedRefImg || urlInput || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80';
       studioState.refs.unshift({
-        id: 'ref_' + Date.now(),
+        id: 'pin_' + Date.now(),
         title,
         artist,
         category: cat,
-        software: ['ZBrush', 'Reference'],
+        software: ['ZBrush', '3D Reference'],
         likes: 'New',
         saved: true,
-        videoId: 'I14uAJ063DY',
         beautyImg: img,
         artstationUrl: sourceLink || `https://www.artstation.com/search?sort_by=relevance&query=${encodeURIComponent(title)}`,
         pinterestUrl: sourceLink || `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(title)}`,
+        tags: ['#CustomPin', '#3DCharacter', '#ZBrush'],
         breakdown
       });
       tempUploadedRefImg = null;
       saveStudioState();
       renderRefBoard();
       closeModal('addRefModal');
-      addXP(20, 'Đã lưu tác phẩm mới vào Tường Reference!');
+      addXP(20, 'Đã ghim tác phẩm mới vào Tường Pinterest Ref!');
     }
 
     // -------------------------------------------------------------------------
-    // PAGE 5: AI ART DIRECTOR CRITIQUE (3D FILE + 2D IMAGE + #STYLE TAGS)
+    // PAGE 5: AI ART DIRECTOR CRITIQUE (GEMINI VISION + 3D FILE + #STYLE TAGS)
     // -------------------------------------------------------------------------
     let critiqueLastStats = null;
 
@@ -2453,7 +3095,7 @@
       });
     }
 
-    function runAICritiqueAnalysis() {
+    async function runAICritiqueAnalysis() {
       const tags = (studioState.selectedCritiqueTags && studioState.selectedCritiqueTags.length)
         ? studioState.selectedCritiqueTags.join(', ')
         : '#AnimeStylized, #SemiRealistic';
@@ -2462,45 +3104,77 @@
         ? `File 3D (${critiqueLastStats.fileName}): ${critiqueLastStats.faces.toLocaleString()} Triangles, ${critiqueLastStats.verts.toLocaleString()} Vertices, UV: ${critiqueLastStats.hasUV ? 'Đã có UV' : 'Chưa mở UV'}.`
         : 'Đánh giá qua bản chụp Viewport 2D.';
 
-      document.getElementById('critiqueScoreTag').textContent = 'Điểm: 89 / 100';
-      document.getElementById('critiqueFeedbackBody').innerHTML = `
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
-            <div>
-              <span class="text-xs text-slate-400">Phong cách chấm:</span>
-              <strong class="text-sky-400 ml-1">${tags}</strong>
+      const btn = document.getElementById('runCritiqueBtn');
+      const origHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Gemini Vision Đang Chấm Bài...`;
+
+      const imgSrc = document.getElementById('critiquePreviewImage').src || '';
+      const parts = [{
+        text: `Bạn là Art Director 3D Character. Hãy nhận xét tác phẩm 3D này theo định hướng phong cách: ${tags}. Thông số lưới: ${meshInfo}. Ghi chú của học viên: "${notes}". Hãy chia làm 3 mục rõ ràng: 1. Điểm mạnh, 2. Lỗi giải phẫu/khối cần sửa ở góc 45° & 90°, 3. Phác đồ cọ ZBrush cụ thể để sửa.`
+      }];
+
+      if (imgSrc.startsWith('data:image/')) {
+        const mimeMatch = imgSrc.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
+        if (mimeMatch) {
+          parts.push({ inlineData: { mimeType: mimeMatch[1], data: mimeMatch[2] } });
+        }
+      }
+
+      try {
+        const aiText = await callGeminiAPI({ contents: [{ role: 'user', parts }] });
+        document.getElementById('critiqueScoreTag').textContent = 'AI Vision Đã Chấm';
+        document.getElementById('critiqueFeedbackBody').innerHTML = `
+          <div class="bg-slate-950 border border-sky-500/40 rounded-xl p-4 space-y-3 text-xs text-slate-200 leading-relaxed">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2">
+              <strong class="text-sky-400">${tags}</strong>
+              <span class="badge badge-cyan">${meshInfo}</span>
             </div>
-            <span class="badge badge-cyan">${meshInfo}</span>
+            <div>${aiText.replace(/\n/g, '<br/>')}</div>
           </div>
-
-          <div>
-            <h4 class="text-xs font-extrabold uppercase text-emerald-400 mb-1"><i class="fa-solid fa-circle-check"></i> 1. Điểm Mạnh Trong Tác Phẩm Hiện Tại</h4>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Khối Primary Forms và đường bóng đổ Silhouette tổng thể đã bám sát định hướng <strong>${tags}</strong>. Tỷ lệ 3 tầng mặt (Trán – Mũi – Cằm) cân đối, phần lưu ý của bạn (<em>"${notes}"</em>) có cấu trúc khối rõ ràng.
-            </p>
+        `;
+        addXP(35, 'Đã hoàn thành phiên chấm bài với Gemini Vision AI!');
+      } catch (e) {
+        document.getElementById('critiqueScoreTag').textContent = 'Điểm: 89 / 100';
+        document.getElementById('critiqueFeedbackBody').innerHTML = `
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+              <div>
+                <span class="text-xs text-slate-400">Phong cách chấm:</span>
+                <strong class="text-sky-400 ml-1">${tags}</strong>
+              </div>
+              <span class="badge badge-cyan">${meshInfo}</span>
+            </div>
+            <div>
+              <h4 class="text-xs font-extrabold uppercase text-emerald-400 mb-1"><i class="fa-solid fa-circle-check"></i> 1. Điểm Mạnh Trong Tác Phẩm Hiện Tại</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Khối Primary Forms và đường bóng đổ Silhouette tổng thể đã bám sát định hướng <strong>${tags}</strong>. Tỷ lệ 3 tầng mặt cân đối, phần lưu ý của bạn (<em>"${notes}"</em>) có cấu trúc khối rõ ràng.
+              </p>
+            </div>
+            <div>
+              <h4 class="text-xs font-extrabold uppercase text-amber-400 mb-1"><i class="fa-solid fa-triangle-exclamation"></i> 2. Điểm Cần Chỉnh Sửa Về Khối & Giải Phẫu (Góc 45° & 90°)</h4>
+              <ul class="list-disc pl-5 text-xs text-slate-300 space-y-1">
+                <li><strong>Độ sâu hốc mắt & Khóe miệng:</strong> Khi xoay sang góc nghiêng 45°, khóe mắt ngoài và hai khóe miệng cần đẩy lùi sâu hơn theo độ cong hình trụ của hộp sọ để mặt không bị phẳng.</li>
+                <li><strong>Diện cắt (Planar Transitions):</strong> Vùng chuyển giữa gò má (Zygomatic) xuống má dưới và cạnh xương hàm dưới cần vát rõ hơn để bắt Rim Light.</li>
+                <li><strong>Mật độ lưới & Topology:</strong> ${critiqueLastStats ? critiqueLastStats.topoEval : 'Cần chạy ZRemesher giữ lưới tứ giác (Quads) đều trước khi lên Subdivision cao.'}</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xs font-extrabold uppercase text-sky-400 mb-1"><i class="fa-solid fa-screwdriver-wrench"></i> 3. Phác Đồ Sửa Khối Từng Bước Trong ZBrush</h4>
+              <ol class="list-decimal pl-5 text-xs text-slate-200 space-y-1.5">
+                <li>Mở <code>Draw &gt; Angle Of View = 85</code> (tiêu cự chân dung), bật MatCap <strong>Grey Clay</strong> và xoay kiểm tra từ dưới cằm lên (Bottom View).</li>
+                <li>Dùng cọ <code>Move (B-M-V)</code> cỡ lớn kéo nhẹ phần đuôi mắt và khóe miệng ôm vào trong theo khối cầu.</li>
+                <li>Dùng <code>TrimDynamic (B-T-D)</code> vát nhẹ sống mũi, bờ mi trên và gò má để tạo diện phẳng bắt sáng sắc nét.</li>
+                <li>Dùng <code>DamStandard (B-D-S)</code> nhấn rõ nếp gấp mí trên và điểm tiếp giáp giữa các cụm tóc lớn.</li>
+              </ol>
+            </div>
           </div>
-
-          <div>
-            <h4 class="text-xs font-extrabold uppercase text-amber-400 mb-1"><i class="fa-solid fa-triangle-exclamation"></i> 2. Điểm Cần Chỉnh Sửa Về Khối & Giải Phẫu (Góc 45° & 90°)</h4>
-            <ul class="list-disc pl-5 text-xs text-slate-300 space-y-1">
-              <li><strong>Độ sâu hốc mắt & Khóe miệng:</strong> Khi xoay sang góc nghiêng 45°, khóe mắt ngoài và hai khóe miệng cần đẩy lùi sâu hơn theo độ cong hình trụ của hộp sọ để mặt không bị phẳng.</li>
-              <li><strong>Diện cắt (Planar Transitions):</strong> Vùng chuyển giữa gò má (Zygomatic) xuống má dưới và cạnh xương hàm dưới cần vát rõ hơn để bắt Rim Light.</li>
-              <li><strong>Mật độ lưới & Topology:</strong> ${critiqueLastStats ? critiqueLastStats.topoEval : 'Cần chạy ZRemesher giữ lưới tứ giác (Quads) đều trước khi lên Subdivision cao.'}</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 class="text-xs font-extrabold uppercase text-sky-400 mb-1"><i class="fa-solid fa-screwdriver-wrench"></i> 3. Phác Đồ Sửa Khối Từng Bước Trong ZBrush</h4>
-            <ol class="list-decimal pl-5 text-xs text-slate-200 space-y-1.5">
-              <li>Mở <code>Draw &gt; Angle Of View = 85</code> (tiêu cự chân dung), bật MatCap <strong>Grey Clay</strong> và xoay kiểm tra từ dưới cằm lên (Bottom View).</li>
-              <li>Dùng cọ <code>Move (B-M-V)</code> cỡ lớn kéo nhẹ phần đuôi mắt và khóe miệng ôm vào trong theo khối cầu.</li>
-              <li>Dùng <code>TrimDynamic (B-T-D)</code> vát nhẹ sống mũi, bờ mi trên và gò má để tạo diện phẳng bắt sáng sắc nét.</li>
-              <li>Dùng <code>DamStandard (B-D-S)</code> nhấn rõ nếp gấp mí trên và điểm tiếp giáp giữa các cụm tóc lớn.</li>
-            </ol>
-          </div>
-        </div>
-      `;
-      addXP(35, 'Đã hoàn thành phiên chấm & phân tích sản phẩm với AI Art Director!');
+        `;
+        addXP(35, 'Đã hoàn thành phiên chấm & phân tích sản phẩm!');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = origHtml;
+      }
     }
 
     function promoteCritiqueWorkToPortfolio() {
@@ -2724,7 +3398,7 @@
       const notes = (document.getElementById('newPortNotes').value || 'Mô hình nhân vật 3D hoàn thiện từ ZBrush & Maya.').trim();
 
       const tags = tagsRaw.split(',').map(s => s.trim()).filter(Boolean);
-      const thumb = newPortTempImg || 'https://i.ytimg.com/vi/I14uAJ063DY/hqdefault.jpg';
+      const thumb = newPortTempImg || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80';
       const newId = 'port_' + Date.now();
       if (newPortTempObj3D) window.__portfolioCustomMeshes[newId] = newPortTempObj3D;
 
@@ -2766,7 +3440,7 @@
     }
 
     // -------------------------------------------------------------------------
-    // INFINITE SCROLL OBSERVERS CHO TRANG 3 (VIDEO) & TRANG 4 (REF WALL)
+    // INFINITE SCROLL OBSERVERS CHO TRANG 3 (VIDEO) & TRANG 4 (PINTEREST WALL)
     // -------------------------------------------------------------------------
     function setupInfiniteScrollObservers() {
       if (!('IntersectionObserver' in window)) return;
@@ -2782,7 +3456,7 @@
             loadMoreRefsBatch();
           }
         });
-      }, { rootMargin: '220px' });
+      }, { rootMargin: '240px' });
 
       if (vidSentinel) obs.observe(vidSentinel);
       if (refSentinel) obs.observe(refSentinel);
@@ -2822,6 +3496,7 @@
     }
 
     function initAllViews() {
+      updateApiKeyHeaderBadge();
       updateHeaderMetrics();
       renderCurriculumList();
       selectRescueScript('cam85');
